@@ -1,0 +1,8 @@
+<div class="map-route">
+  <div class="container" *ngIf="Auth.getAuthenticated">
+    <a [routerLink]="['/',Url.Home]">หน้าหลัก</a>
+    <ng-container *ngFor="let route of Global.RouterNow" >
+      <a *ngIf="route !=''" [routerLink]="['/',route]"> / {{ NaneRote[route] }}</a>
+    </ng-container>
+  </div>
+</div>

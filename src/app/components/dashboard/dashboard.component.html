@@ -1,0 +1,131 @@
+<div class="container">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body shadow">
+        <h2 class="text-center">กราฟสรุปผล</h2>
+        <hr>
+        <div class="row">
+          <div class="col-lg-3 col-md-6">
+            <div class="panel panel-success">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-3 pading">
+                    <i class="wi wi-small-craft-advisory fa-5x"></i>
+                  </div>
+                  <div class="col-xs-9 text-right">
+                    <div class="huge">55
+                      <span>ํ</span>
+                    </div>
+                    <div>องศาเซลเซียส</div>
+                    <div>อุณหภูมิดิน</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-md-offset-5 box-weather">
+            <!-- <div class="col-md-6 text-center">
+              <i class="wi wi-day-sunny fa-5x" style="color:yellow;"></i>
+            </div> -->
+            <div class="col-md-6 text-center">
+              <i class="wi wi-day-rain-wind fa-5x" style="color:rgb(50, 133, 201);"></i>
+            </div>
+            <div class="col-md-6 text-right">
+              <p class="title">สภาพอากาศ</p>
+              <!-- <p>เเสงเเดดสดใส</p> -->
+              <p>มีฝนตก</p>
+            </div>
+
+          </div>
+          <!-- temp -->
+        </div>
+        <div class="row">
+          <!-- temp -->
+          <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-3 pading">
+                    <i class="wi wi-thermometer fa-5x"></i>
+                  </div>
+                  <div class="col-xs-9 text-right">
+                    <div class="huge">55
+                      <span>ํ</span>
+                    </div>
+                    <div>องศาเซลเซียส</div>
+                    <div>อุณหภูมิ</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- moisture -->
+          <div class="col-lg-3 col-md-6">
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-3 pading">
+                    <i class="wi wi-humidity fa-5x"></i>
+                  </div>
+                  <div class="col-xs-9 text-right">
+                    <div class="huge">26 %</div>
+                    <div>เปอร์เซนต์</div>
+                    <div>ความชื้น</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- wind -->
+          <div class="col-lg-3 col-md-6">
+            <div class="panel panel-danger">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-3 pading">
+                    <i class="wi wi-wind-beaufort-0 fa-5x"></i>
+                  </div>
+                  <div class="col-xs-9 text-right">
+                    <div class="huge">26</div>
+                    <div>บาร์</div>
+                    <div>ความเเรงลม</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- uv -->
+          <div class="col-lg-3 col-md-6">
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-3 pading">
+                    <i class="wi wi-hot fa-5x"></i>
+                  </div>
+                  <div class="col-xs-9 text-right">
+                    <div class="huge">26</div>
+                    <div>อัลตราไวโอเลต</div>
+                    <div>เเสงเเดด</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <canvas 
+            baseChart 
+            width="400" 
+            height="200" 
+            [datasets]="lineChartData" 
+            [labels]="lineChartLabels" 
+            [options]="lineChartOptions"
+            [colors]="lineChartColors" 
+            [legend]="lineChartLegend" 
+            [chartType]="lineChartType" 
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>

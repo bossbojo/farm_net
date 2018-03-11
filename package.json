@@ -5,8 +5,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
     "test": "ng test",
+    "build": "ng build --aot=false -prod --deploy-url \"Frontend/\"",
+    "deploy:real": "npm run build&&deploy.bat",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -21,8 +22,19 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
+    "angular-chart.js": "^1.1.1",
+    "bootstrap": "^3.3.7",
+    "chart.js": "^2.7.2",
     "core-js": "^2.4.1",
+    "jquery": "^3.2.1",
+    "jquery-confirm": "^3.3.2",
+    "ng2-charts": "^1.6.0",
+    "ngx-perfect-scrollbar": "^5.3.1",
+    "ngx-progressbar": "^2.1.1",
+    "popper.js": "^1.12.9",
     "rxjs": "^5.4.1",
+    "tether": "^1.4.1",
+    "tooltip.js": "^1.1.7",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

@@ -1,0 +1,36 @@
+.navbar-farm {
+  z-index: 10;
+  position: fixed;
+  width: 100%;
+  height: 70px;
+  background-color: #00cc66;
+  .container {
+    padding: 8px;
+    .btn-logo {
+      color: white;
+      padding: 10px;
+      font-size: 17px;
+      transition: all 0.5s;
+      &:hover{
+        color: #dddddd;
+    }
+    }
+    .group-menu {
+      padding: 12px 10px 10px 10px;
+      height: 50px;
+      .right-menu {
+        position: relative;
+        color: white;
+        padding: 10px;
+        transition: all 0.5s;
+        &:hover{
+            color: #dddddd;
+        }
+      }
+    }
+  }
+}
+
+.padding-bottom {
+  height: 70px;
+}

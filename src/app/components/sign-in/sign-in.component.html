@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="panel panel-default">
+      <div class="panel-body shadow">
+        <h2 class="text-center">เข้าสู่ระบบ</h2>
+        <div class="col-md-6 col-md-offset-3">
+          <form [formGroup]="FormSignIn" (submit)="OnSubmit()">
+            <div class="form-group">
+              <label for="username"><i class="fas fa-user"></i> ชื่อผู้ใช้งาน:</label>
+              <input type="text" class="form-control" id="username" formControlName="username">
+              <validation [control]="FormSignIn.controls['username']"></validation>
+            </div>
+            <div class="form-group">
+              <label for="pwd"><i class="fas fa-key"></i> รหัสผ่าน:</label>
+              <input type="password" class="form-control" id="pwd"  formControlName="password">
+              <validation [control]="FormSignIn.controls['password']"></validation>
+            </div>
+            <hr>
+            <div class="text-right">
+              <button type="submit" class="btn btn-success"><i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
