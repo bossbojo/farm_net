@@ -29,7 +29,7 @@
             </li>
           </ul>
         </span>
-        <span class="dropdown">
+        <span class="dropdown" *ngIf="User" >
           <a class="right-menu dropdown-toggle" type="button" data-toggle="dropdown">
             {{User.username}}
             <span class="caret"></span>

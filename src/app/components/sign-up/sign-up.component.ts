@@ -14,6 +14,11 @@ import { UrlConfig } from '../../configs/url.config';
 })
 export class SignUpComponent implements OnInit {
   FormSignUp: FormGroup;
+  lat: number = 15.13576435459581;
+  lng: number = 104.92775917053223;
+  latMark: number = 0;
+  lngMark: number = 0;
+  YouPoint:string;
   constructor(private build: FormBuilder, private http: HttpService, private route: Router, private global: GlobalValueService) {
     this.FormSignUp = this.build.group({
       firstname: ['', [Validators.required]],
@@ -28,8 +33,18 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {
   }
+  OnPickMap(e){
+    this.YouPoint = "ตำเเหน่งของคุณ";
+    let point = e.coords;
+    this.latMark = point.lat;
+    this.lngMark = point.lng;
+  }
   OnSubmit() {
     if (this.FormSignUp.valid) {
+      if(this.latMark == 0&&this.lngMark == 0){
+        jalert('เเจ้งเตือน','กรุณาเลือกตำเเหน่งของคุณ');
+        return;
+      }
       this.global.OnShowLoading();
       let obj = {
         "firstname": this.FormSignUp.controls['firstname'].value,
@@ -38,6 +53,8 @@ export class SignUpComponent implements OnInit {
         "username": this.FormSignUp.controls['username'].value,
         "password": this.FormSignUp.controls['password'].value,
         "serial_number": this.FormSignUp.controls['serial_number'].value,
+        "lat": this.latMark,
+        "lng": this.lngMark,
         "user_type_id": 2
       }
       this.http.requestPost(`signup`, obj).subscribe((res: any) => {
@@ -70,6 +87,8 @@ export class SignUpComponent implements OnInit {
         this.global.OnHiddenLoading();
         jalert('เเจ้งเตือน', err.data.Message)
       });
+    }else{
+      jalert('เเจ้งเตือน','กรุณาตรวจสอบข้อมูลนำเข้า');
     }
   }
   onComparePassword(password: HTMLInputElement, confirm_password: HTMLInputElement) {

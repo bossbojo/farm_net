@@ -1,4 +1,4 @@
-let production = true;
+let production = false;
 export const UrlConfig = {
     Home: 'home',
     Signup: 'signup',
@@ -6,8 +6,9 @@ export const UrlConfig = {
     Profile: 'profile',
     Dashboard: 'dahboard',
     HistorySensor: 'history-sensor',
-    ChangePassword: 'change-password'
+    ChangePassword: 'change-password',
+    TestInput: 'test-input'
 };
-export const baseUrl = production? 'http://farm.paramat.work/api':'http://localhost:50262/api';
-export const baseUrlimg = production? 'http://farm.paramat.work/Images':'http://localhost:50262/';
-export const baseUrlsignalr = production? 'http://farm.paramat.work/':'http://localhost:50262/';
+export const baseUrl = production? 'http://farm.paramat.work/api':'http://localhost:64630/api';
+export const baseUrlimg = production? 'http://farm.paramat.work/Images/':'http://localhost:64630/Images/';
+export const baseUrlsignalr = production? 'http://farm.paramat.work/':'http://localhost:64630/';

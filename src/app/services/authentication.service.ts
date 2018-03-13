@@ -12,7 +12,10 @@ export class AuthenticationService {
     private authenticated: string;
     private authenticatedDetail: string;
     private authenticatedType: string;
-    constructor(private route:Router){}
+    public User:any;
+    constructor(private route:Router){
+        this.getUser();
+    }
     // get realtime authenticated : แสดงข้อมูล authenticated เมื่อมี event เกิดขึ้น
     public getAuthenticatedEvent: EventEmitter<string> = new EventEmitter<string>();
 
@@ -44,8 +47,9 @@ export class AuthenticationService {
         this.authenticated = this.storage.getItem(this.authorizationKey);
         return this.authenticated;
     }
-    get getUser(){
-        return StorageConfog.getItem('user');
+    getUser(){
+        this.User = StorageConfog.getItem('user');
+        return  this.User;
     }
 
     // Convert localStorage to clien session : แปลงข้อมูล localStorage

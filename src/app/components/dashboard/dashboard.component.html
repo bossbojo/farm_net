@@ -112,17 +112,44 @@
           </div>
         </div>
         <div class="row">
-          <canvas 
-            baseChart 
-            width="400" 
-            height="200" 
-            [datasets]="lineChartData" 
-            [labels]="lineChartLabels" 
-            [options]="lineChartOptions"
-            [colors]="lineChartColors" 
-            [legend]="lineChartLegend" 
-            [chartType]="lineChartType" 
-            (chartHover)="chartHovered($event)"
+          <div class="col-md-6">
+            <div class="image-show">
+              <img src="assets\images\garlic-farm.jpg">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <agm-map [latitude]="lat" [longitude]="lng">
+              <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+            </agm-map>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <div class="row">
+                  <label class="checkbox-inline">
+                    เเสดงตาม :
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="radio" value="" name="sortby"> ชั่วโมง
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="radio" value="" name="sortby"> วัน
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="radio" value="" name="sortby"> เดือน
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="radio" value="" name="sortby"> ปี
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <canvas baseChart width="400" height="200" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+            [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)"
             (chartClick)="chartClicked($event)"></canvas>
         </div>
         <hr>

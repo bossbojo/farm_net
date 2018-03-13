@@ -1,0 +1,109 @@
+<div class="container">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="panel panel-default">
+      <div class="panel-body shadow">
+        <h2 class="text-center">ทดสอบส่งข้อมูล</h2>
+        <ul class="nav nav-tabs">
+          <li [ngClass]="{'active':tab==1}">
+            <a (click)="tab = 1">เซ็นเซอร์ทั่วไป</a>
+          </li>
+          <li [ngClass]="{'active':tab==2}">
+            <a (click)="tab = 2">เซ็นเซอร์ดิน</a>
+          </li>
+          <li [ngClass]="{'active':tab==3}">
+            <a (click)="tab = 3">อัพโหลดรูป</a>
+          </li>
+        </ul>
+        <hr>
+        <div class="row" *ngIf="tab == 1">
+          <div class="col-md-6 col-md-offset-3">
+            <form [formGroup]="TestDataSensor" (click)="OnSubmitDataSensor()">
+              <div class="form-group">
+                <label for="serial_number">
+                  <i class="fas fa-address-book"></i> temp:
+                </label>
+                <input type="text" class="form-control" id="temp" formControlName="temp">
+                <validation [control]="TestDataSensor.controls['temp']"></validation>
+              </div>
+              <div class="form-group">
+                <label for="serial_number">
+                  <i class="fas fa-address-book"></i> moisture:
+                </label>
+                <input type="text" class="form-control" id="moisture" formControlName="moisture">
+                <validation [control]="TestDataSensor.controls['moisture']"></validation>
+              </div>
+              <div>
+                <label for="serial_number">
+                  <i class="fas fa-address-book"></i> raining:
+                </label>
+                <input type="checkbox" id="raining" formControlName="raining">
+
+              </div>
+              <div class="form-group">
+                <label for="serial_number">
+                  <i class="fas fa-address-book"></i> moisture_level:
+                </label>
+                <input type="text" class="form-control" id="moisture_level" formControlName="moisture_level">
+                <validation [control]="TestDataSensor.controls['moisture_level']"></validation>
+              </div>
+              <div class="form-group">
+                <label for="serial_number">
+                  <i class="fas fa-address-book"></i> wind:
+                </label>
+                <input type="text" class="form-control" id="wind" formControlName="wind">
+                <validation [control]="TestDataSensor.controls['wind']"></validation>
+              </div>
+              <div class="form-group">
+                <label for="serial_number">
+                  <i class="fas fa-address-book"></i> uv:
+                </label>
+                <input type="text" class="form-control" id="wind" formControlName="uv">
+                <validation [control]="TestDataSensor.controls['uv']"></validation>
+              </div>
+              <hr>
+              <div class="text-right">
+                <button type="submit" class="btn btn-success">
+                  <i class="fas fa-user-plus"></i> ส่งข้อมูล</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row" *ngIf="tab == 2">
+          <div class="col-md-6 col-md-offset-3">
+            <form [formGroup]="TestDataSensorSoil" (click)="OnSubmitSensorSoil()">
+              <div class="form-group">
+                <label for="soil_data">
+                  <i class="fas fa-address-book"></i> soil_data:
+                </label>
+                <input type="text" class="form-control" id="soil_data" formControlName="soil_data">
+                <validation [control]="TestDataSensorSoil.controls['soil_data']"></validation>
+              </div>
+              <hr>
+              <div class="text-right">
+                <button type="submit" class="btn btn-success">
+                  <i class="fas fa-user-plus"></i> ส่งข้อมูล</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row" *ngIf="tab == 3">
+          <div class="col-md-6 col-md-offset-3">
+            <form (click)="OnSubmitImage()">
+              <div>
+                <div class="text-center">
+                  <img src="{{ImageBase64}}" width="350px" height="350px">
+                </div>
+                <input type="file" accept="image/*" id="avatar" (change)="onFileChange($event)">
+              </div>
+              <hr>
+              <div class="text-right">
+                <button  (click)="OnSubmitImage()" class="btn btn-success">
+                  <i class="fas fa-user-plus"></i> ส่งข้อมูล</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

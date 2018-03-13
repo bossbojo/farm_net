@@ -6,10 +6,12 @@ declare const angular;
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-
+  //map
+  lat: number = 51.678418;
+  lng: number = 7.809007;
   // lineChart
   public lineChartData: Array<any> = [
-    { data: [2, 19, 32, 23, 11, 43, 33], label: 'อุณหภูมิดิน' },
+    { data: [2, 19, 32], label: 'อุณหภูมิดิน' },
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'อุณหภูมิ' },
     { data: [28, 48, 40, 19, 86, 27, 90], label: 'ความชื้น' },
     { data: [18, 48, 77, 9, 120, 27, 40], label: 'ความเเรงลม' },

@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class FooterComponent implements OnInit {
   User:any;
   constructor(public Auth:AuthenticationService) {
-    this.User = Auth.getUser;
+    this.User = Auth.User;
    }
 
   ngOnInit() {

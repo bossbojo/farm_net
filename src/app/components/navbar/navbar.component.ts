@@ -12,8 +12,7 @@ export class NavbarComponent implements OnInit {
   Url = UrlConfig;
   User: any;
   constructor(public Auth: AuthenticationService) {
-    console.log(Auth.getUser);
-    this.User = Auth.getUser;
+      this.User = Auth.User;
   }
 
   ngOnInit() {

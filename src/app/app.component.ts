@@ -13,9 +13,6 @@ export class AppComponent {
   constructor(public Auth:AuthenticationService,private route:Router,private GlobalValueService:GlobalValueService){
   }
   onGetComponent(e) {
-    //console.log(e);
     this.GlobalValueService.RouterNow = this.route.url.split('/');
-    console.log(this.GlobalValueService.RouterNow );
-    
   }
 }
