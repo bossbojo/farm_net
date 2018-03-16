@@ -42,6 +42,11 @@ export const RoutesList: Routes = [
         canActivate:[AuthenticationGuard]
     },
     {
+        path: Url.Setting,
+        loadChildren: 'app/components/setting/setting.module.ts#SettingModule',
+        canActivate:[AuthenticationGuard]
+    },
+    {
         path: '**',
         redirectTo:Url.Home,
         pathMatch: 'full'

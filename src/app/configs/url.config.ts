@@ -6,7 +6,8 @@ export const UrlConfig = {
     Profile: 'profile',
     Dashboard: 'dahboard',
     HistorySensor: 'history-sensor',
-    ChangePassword: 'change-password'
+    ChangePassword: 'change-password',
+    Setting: 'setting'
 };
 export const baseUrl = production? 'http://farm.paramat.work/api':'http://localhost:50262/api';
 export const baseUrlimg = production? 'http://farm.paramat.work/Images':'http://localhost:50262/';
