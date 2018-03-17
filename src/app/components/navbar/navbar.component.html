@@ -1,60 +1,64 @@
 <div class="navbar-farm shadow">
   <div class="container">
-    <div class="col-md-6">
-      <a class="btn-logo" [routerLink]="['/',Url.Home]">
-        <img src="assets\images\logo.png" width="50px"> ระบบตรวจสอบและติดตามสภาพแวดล้อมการปลูกพืช
-      </a>
-    </div>
-    <div class="col-md-6 text-right">
-      <div class="group-menu" *ngIf="!Auth.getAuthenticated">
-        <a class="right-menu" [routerLink]="['/',Url.Signin]">
-          <i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ</a>
-        <a class="right-menu" [routerLink]="['/',Url.Signup]">
-          <i class="fas fa-user-plus"></i> สมัครสมาชิก</a>
-      </div>
-      <div class="group-menu" *ngIf="Auth.getAuthenticated">
-        <span class="dropdown">
-          <a class="right-menu dropdown-toggle" type="button" data-toggle="dropdown">
-            เมนูหลัก
-            <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <a [routerLink]="['/',Url.Dashboard]">
-                <i class="fas fa-chart-line"></i> กราฟสรุปผล</a>
-            </li>
-            <li>
-              <a [routerLink]="['/',Url.HistorySensor]">
-                <i class="fas fa-history"></i> ประวัติเซ็นเซอร์</a>
-            </li>
-            <li>
-              <a [routerLink]="['/',Url.Setting]">
-                <i class="fas fa-cog"></i> ตั้งค่าเซ็นเซอร์</a>
-            </li>
-          </ul>
-        </span>
-        <span class="dropdown" *ngIf="User" >
-          <a class="right-menu dropdown-toggle" type="button" data-toggle="dropdown">
-            {{User.username}}
-            <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <a [routerLink]="['/',Url.Profile]">
-                <i class="fas fa-user"></i> โปรไฟล์</a>
-            </li>
-            <li>
-              <a [routerLink]="['/',Url.ChangePassword]">
-                <i class="fas fa-key"></i> เปลี่ยนรหัสผ่าน</a>
-            </li>
-            <li>
-              <a (click)="Onlogout()">
-                <i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
-            </li>
-          </ul>
-        </span>
-      </div>
-    </div>
+    <table style="width:100%;">
+      <tr>
+        <td>
+            <a class="btn-logo" [routerLink]="['/',Url.Home]">
+              <img src="assets\images\logo.png" width="50px"> <span class="hidden-text">ระบบตรวจสอบและติดตามสภาพแวดล้อมการปลูกพืช</span>
+            </a>
+        </td>
+        <td class=" text-right">
+            <div class="group-menu" *ngIf="!Auth.getAuthenticated">
+                <a class="right-menu" [routerLink]="['/',Url.Signin]">
+                  <i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ</a>
+                <a class="right-menu" [routerLink]="['/',Url.Signup]">
+                  <i class="fas fa-user-plus"></i> สมัครสมาชิก</a>
+              </div>
+              <div class="group-menu" *ngIf="Auth.getAuthenticated">
+                <span class="dropdown">
+                  <a class="right-menu dropdown-toggle" type="button" data-toggle="dropdown">
+                    เมนูหลัก
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a [routerLink]="['/',Url.Dashboard]">
+                        <i class="fas fa-chart-line"></i> กราฟสรุปผล</a>
+                    </li>
+                    <!-- <li>
+                      <a [routerLink]="['/',Url.HistorySensor]">
+                        <i class="fas fa-history"></i> ประวัติเซ็นเซอร์</a>
+                    </li> -->
+                    <li>
+                      <a [routerLink]="['/',Url.Setting]">
+                        <i class="fas fa-cog"></i> ตั้งค่าเซ็นเซอร์</a>
+                    </li>
+                  </ul>
+                </span>
+                <span class="dropdown" *ngIf="User" >
+                  <a class="right-menu dropdown-toggle" type="button" data-toggle="dropdown">
+                    {{User.username}}
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a [routerLink]="['/',Url.Profile]">
+                        <i class="fas fa-user"></i> โปรไฟล์</a>
+                    </li>
+                    <li>
+                      <a [routerLink]="['/',Url.ChangePassword]">
+                        <i class="fas fa-key"></i> เปลี่ยนรหัสผ่าน</a>
+                    </li>
+                    <li>
+                      <a (click)="Onlogout()">
+                        <i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
+                    </li>
+                  </ul>
+                </span>
+              </div>
+        </td>
+      </tr>
+    </table>
   </div>
 </div>
 <div class="padding-bottom"></div>

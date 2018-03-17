@@ -1,4 +1,8 @@
+import { DatePipe } from '@angular/common';
+import { baseUrlimg } from './../../configs/url.config';
+import { HttpService } from './../../services/http.service';
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../services/authentication.service';
 declare const angular;
 @Component({
   selector: 'app-dashboard',
@@ -6,18 +10,28 @@ declare const angular;
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
+  baseUrlimg = baseUrlimg;
   //map
   lat: number = 51.678418;
   lng: number = 7.809007;
+
+  //last sensor
+  soil;
+  temp;
+  uv;
+  wind;
+  raining;
+  moisture;
+  image;
   // lineChart
   public lineChartData: Array<any> = [
-    { data: [2, 19, 32], label: 'อุณหภูมิดิน' },
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'อุณหภูมิ' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'ความชื้น' },
-    { data: [18, 48, 77, 9, 120, 27, 40], label: 'ความเเรงลม' },
-    { data: [1, 3, 43, 5, 12, 54, 3], label: 'เเสงเเดด' }
+    { data: [], label: 'อุณหภูมิดิน' },
+    { data: [], label: 'อุณหภูมิ' },
+    { data: [], label: 'ความชื้น' },
+    { data: [], label: 'ความเเรงลม' },
+    { data: [], label: 'เเสงเเดด' }
   ];
-  public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public lineChartLabels: Array<any> = [];
   public lineChartOptions: any = {
     responsive: true
   };
@@ -65,24 +79,56 @@ export class DashboardComponent {
   ];
   public lineChartLegend: boolean = true;
   public lineChartType: string = 'line';
-
-  public randomize(): void {
-    let _lineChartData: Array<any> = new Array(this.lineChartData.length);
-    for (let i = 0; i < this.lineChartData.length; i++) {
-      _lineChartData[i] = { data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label };
-      for (let j = 0; j < this.lineChartData[i].data.length; j++) {
-        _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
-      }
-    }
-    this.lineChartData = _lineChartData;
+  public User:any;
+  constructor(private http: HttpService,private Auth:AuthenticationService,private datePipe: DatePipe ) {
+    this.GetData();
+    this.GetDataSoil();
+    this.GetImage();
+    this.User = this.Auth.User;
+    this.lat = this.User.lat;
+    this.lng = this.User.lng;
   }
-
+  GetData() {
+    this.http.requestGet(`get/data/sensor/main`).subscribe((res: any) => {
+      let data = res.data;
+      for (let i = 0; i < data.length; i++) {
+        this.lineChartLabels.push(this.datePipe.transform(data[i].date,'dd/MM/yyyy') + ' ' + data[i].hour+'hr');
+        this.lineChartData[1].data.push(data[i].temp) //อุณหภูมิ
+        this.lineChartData[2].data.push(data[i].moisture) //ความชื้น
+        this.lineChartData[3].data.push(data[i].wind) //ความเเรงลม
+        this.lineChartData[4].data.push(data[i].uv) //เเสงเเดด
+        if(i == data.length-1){
+          this.temp = data[i].temp;
+          this.uv = data[i].uv;
+          this.wind = data[i].wind;
+          this.raining = data[i].raining;
+          this.moisture = data[i].moisture;
+        }
+      }
+    });
+  }
+  GetDataSoil(){
+    this.http.requestGet(`get/data/sensor/soil`).subscribe((res: any) => {
+      let data = res.data;
+      for (let i = 0; i < data.length; i++) {
+        this.lineChartData[0].data.push(data[i].soil_data) //อุณหภูมิ
+        if(i == data.length-1){
+          this.soil = data[i].soil_data;
+        }
+      }
+    });
+  }
+  GetImage(){
+    this.http.requestGet(`get/image`).subscribe((res: any) => {
+      this.image = res.data.image;
+    });
+  }
   // events
   public chartClicked(e: any): void {
-    console.log(e);
+    //console.log(e);
   }
 
   public chartHovered(e: any): void {
-    console.log(e);
+   // console.log(e);
   }
 }

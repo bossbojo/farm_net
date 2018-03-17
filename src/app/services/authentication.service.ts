@@ -28,6 +28,7 @@ export class AuthenticationService {
         this.storage.setItem(this.authorizationDetail,JSON.stringify(this.authenticatedDetail));
         this.storage.setItem(this.authorizationType,JSON.stringify(this.authenticatedType));
         this.getAuthenticatedEvent.emit(this.authenticated);
+        this.getUser();
     }
 
     // remove data authenticated : นำข้อมูลออกจาก  authenticated

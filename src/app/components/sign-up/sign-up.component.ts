@@ -21,13 +21,22 @@ export class SignUpComponent implements OnInit {
   YouPoint:string;
   constructor(private build: FormBuilder, private http: HttpService, private route: Router, private global: GlobalValueService) {
     this.FormSignUp = this.build.group({
-      firstname: ['', [Validators.required]],
-      lastname: ['', [Validators.required]],
-      email: ['', [Validators.required, ValidatorsConfig.IsEmail]],
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required, ValidatorsConfig.comparePassword('confirmpassword')]],
-      confirmpassword: ['', [Validators.required, ValidatorsConfig.comparePassword('password')]],
-      serial_number: ['', [Validators.required, ValidatorsConfig.IsSerialNumber]],
+      "firstname":  ['', [Validators.required]],
+      "lastname":  ['', [Validators.required]],
+      "email":  ['', [Validators.required]],
+      "username":  ['', [Validators.required]],
+      "password": ['', [Validators.required, ValidatorsConfig.comparePassword('confirmpassword')]],
+      "confirmpassword": ['', [Validators.required, ValidatorsConfig.comparePassword('password')]],
+      "serial_number":['', [Validators.required, ValidatorsConfig.IsSerialNumber]],
+      "lat":  [this.lat, [Validators.required]],
+      "lng":  [this.lng, [Validators.required]],
+      "user_type_id":  ['2', [Validators.required]],
+      "house_no":  ['', [Validators.required]],
+      "village_no":  ['', [Validators.required]],
+      "sub_area": ['', [Validators.required]],
+      "area": ['', [Validators.required]],
+      "province":  ['', [Validators.required]],
+      "postal_code":  ['', [Validators.required]]
     });
   }
 
@@ -46,18 +55,7 @@ export class SignUpComponent implements OnInit {
         return;
       }
       this.global.OnShowLoading();
-      let obj = {
-        "firstname": this.FormSignUp.controls['firstname'].value,
-        "lastname": this.FormSignUp.controls['lastname'].value,
-        "email": this.FormSignUp.controls['email'].value,
-        "username": this.FormSignUp.controls['username'].value,
-        "password": this.FormSignUp.controls['password'].value,
-        "serial_number": this.FormSignUp.controls['serial_number'].value,
-        "lat": this.latMark,
-        "lng": this.lngMark,
-        "user_type_id": 2
-      }
-      this.http.requestPost(`signup`, obj).subscribe((res: any) => {
+      this.http.requestPost(`signup`, this.FormSignUp.value).subscribe((res: any) => {
         if (res.data) {
           jconfirm('สำเร็จ', 'คุณต้องการต้องการเข้าสู่ระบบ?').then((suc: any) => {
             if (suc){

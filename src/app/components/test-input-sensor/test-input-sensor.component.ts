@@ -54,6 +54,7 @@ export class TestInputSensorComponent implements OnInit {
         if (res.data) {
           this.global.OnHiddenLoading();
           jalert('เสร็จสิ้น', 'เพิ่มข้อมูลเสร็จเรียบร้อย');
+          this.TestDataSensor.reset();
         }
       }, (res: any) => {
         this.global.OnHiddenLoading();
@@ -72,6 +73,7 @@ export class TestInputSensorComponent implements OnInit {
         if (res.data) {
           this.global.OnHiddenLoading();
           jalert('เสร็จสิ้น', 'เพิ่มข้อมูลเสร็จเรียบร้อย');
+          this.TestDataSensorSoil.reset();
         }
       }, (res: any) => {
         this.global.OnHiddenLoading();

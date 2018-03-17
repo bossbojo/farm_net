@@ -13,7 +13,7 @@
                     <i class="wi wi-small-craft-advisory fa-5x"></i>
                   </div>
                   <div class="col-xs-9 text-right">
-                    <div class="huge">55
+                    <div class="huge">{{soil>0?soil:0}}
                       <span>ํ</span>
                     </div>
                     <div>องศาเซลเซียส</div>
@@ -24,16 +24,16 @@
             </div>
           </div>
           <div class="col-md-4 col-md-offset-5 box-weather">
-            <!-- <div class="col-md-6 text-center">
+            <div class="col-md-6 text-center" *ngIf="!raining">
               <i class="wi wi-day-sunny fa-5x" style="color:yellow;"></i>
-            </div> -->
-            <div class="col-md-6 text-center">
+            </div>
+            <div class="col-md-6 text-center" *ngIf="raining">
               <i class="wi wi-day-rain-wind fa-5x" style="color:rgb(50, 133, 201);"></i>
             </div>
             <div class="col-md-6 text-right">
               <p class="title">สภาพอากาศ</p>
-              <!-- <p>เเสงเเดดสดใส</p> -->
-              <p>มีฝนตก</p>
+              <p *ngIf="!raining">เเสงเเดดสดใส</p>
+              <p *ngIf="raining">มีฝนตก</p>
             </div>
 
           </div>
@@ -49,7 +49,7 @@
                     <i class="wi wi-thermometer fa-5x"></i>
                   </div>
                   <div class="col-xs-9 text-right">
-                    <div class="huge">55
+                    <div class="huge">{{temp>0?temp:0}}
                       <span>ํ</span>
                     </div>
                     <div>องศาเซลเซียส</div>
@@ -68,7 +68,7 @@
                     <i class="wi wi-humidity fa-5x"></i>
                   </div>
                   <div class="col-xs-9 text-right">
-                    <div class="huge">26 %</div>
+                    <div class="huge">{{moisture>0?moisture:0}} %</div>
                     <div>เปอร์เซนต์</div>
                     <div>ความชื้น</div>
                   </div>
@@ -85,7 +85,7 @@
                     <i class="wi wi-wind-beaufort-0 fa-5x"></i>
                   </div>
                   <div class="col-xs-9 text-right">
-                    <div class="huge">26</div>
+                    <div class="huge">{{wind>0?wind:0}}</div>
                     <div>บาร์</div>
                     <div>ความเเรงลม</div>
                   </div>
@@ -102,7 +102,7 @@
                     <i class="wi wi-hot fa-5x"></i>
                   </div>
                   <div class="col-xs-9 text-right">
-                    <div class="huge">26</div>
+                    <div class="huge">{{ uv>0?uv:0}}</div>
                     <div>อัลตราไวโอเลต</div>
                     <div>เเสงเเดด</div>
                   </div>
@@ -113,8 +113,11 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <div class="image-show">
-              <img src="assets\images\garlic-farm.jpg">
+            <div class="image-show" *ngIf="image">
+              <img [src]="baseUrlimg+image">
+            </div>
+            <div class="image-show" *ngIf="!image">
+              <img src="assets/images/no-thumbnail.png">
             </div>
           </div>
           <div class="col-md-6">
@@ -124,7 +127,12 @@
           </div>
         </div>
         <hr>
-        <div class="row">
+        <div class="row" *ngIf="lineChartLabels.length == 0">
+          <div class="col-md-12"  >
+            <img src="assets/images/nodata.jpg" width="100%">
+          </div>
+        </div>
+        <div class="row" *ngIf="lineChartLabels.length > 0">
           <div class="col-md-12">
             <div class="panel panel-info">
               <div class="panel-heading">
@@ -133,9 +141,9 @@
                     เเสดงตาม :
                   </label>
                   <label class="checkbox-inline">
-                    <input type="radio" value="" name="sortby"> ชั่วโมง
+                    <input type="radio" name="sortby" checked> ชั่วโมง
                   </label>
-                  <label class="checkbox-inline">
+                  <!-- <label class="checkbox-inline">
                     <input type="radio" value="" name="sortby"> วัน
                   </label>
                   <label class="checkbox-inline">
@@ -143,14 +151,15 @@
                   </label>
                   <label class="checkbox-inline">
                     <input type="radio" value="" name="sortby"> ปี
-                  </label>
+                  </label> -->
                 </div>
               </div>
             </div>
           </div>
-          <canvas baseChart width="400" height="200" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+          <canvas baseChart width="400" height="250" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
             [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></canvas>
+            (chartClick)="chartClicked($event)">
+          </canvas>
         </div>
         <hr>
       </div>

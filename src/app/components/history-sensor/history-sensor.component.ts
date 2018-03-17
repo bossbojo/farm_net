@@ -13,6 +13,7 @@ export class HistorySensorComponent implements OnInit {
   startPage: number = 1;
   MaxData: number = 20;
   User: any;
+  data:any;
   constructor(private http: HttpService, private global: GlobalValueService, private Auth: AuthenticationService) {
     this.User = this.Auth.User;
     this.GetData();
@@ -23,10 +24,8 @@ export class HistorySensorComponent implements OnInit {
   GetData() {
     this.http.requestGet(`get/data_sensor?start=${this.startPage}&max=${this.MaxData}`)
       .subscribe((res: any) => {
-        console.log(res.data);
+        this.data = res.data;
       }, (err:any) =>{
-        console.log(err);
-        
         jalert('เเจ้งเตือน',err.data.Message);
       });
   }

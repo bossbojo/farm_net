@@ -27,3 +27,38 @@
 .Aligner-item {
   max-width: 50%;
 }
+.show-text{
+  display: none;
+}
+@media only screen and (max-width: 600px) {
+  .hidden-text {
+      display: none;
+  }
+  .show-text{
+    display: block;
+  }
+  .menu-hide {
+    padding-left:25% ;
+}
+}
+@media only screen and (max-width: 450px) {
+  .menu-hide {
+      padding-left:10% ;
+  }
+}
+@media only screen and (max-width: 380px) {
+  .menu-hide {
+      padding-left:15% ;
+  }
+  .box-menu {
+    width: 200px;
+  }
+}
+@media only screen and (max-width: 340px) {
+  .menu-hide {
+      padding-left:5% ;
+  }
+  .box-menu {
+    width: 200px;
+  }
+}

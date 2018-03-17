@@ -1,9 +1,20 @@
-.setting-sensor{
-    padding: 25px;   
+.setting-sensor {
+  padding: 25px;
 }
-.icon-setting{
-    padding: 10px;
+
+.icon-setting {
+  padding: 10px;
 }
-.col-md-4{
-    text-align: center;
+
+.col-md-4 {
+  text-align: center;
+}
+
+.form-group {
+  span {
+    position: absolute;
+    top: 10px;
+    float: left;
+    right: 45px;
+  }
 }

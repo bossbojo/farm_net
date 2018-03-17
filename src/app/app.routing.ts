@@ -44,6 +44,7 @@ export const RoutesList: Routes = [
     {
         path: Url.TestInput,
         loadChildren: 'app/components/test-input-sensor/test-input-sensor.module.ts#TestInputSensorModule',
+        canActivate:[AuthenticationGuard]
     },
     {
         path: Url.Setting,

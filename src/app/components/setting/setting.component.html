@@ -5,91 +5,116 @@
         <h2 class="text-center">ตั้งค่า เซ็นเซอร์</h2>
         <hr>
         <div class="row setting-sensor">
-          <div class="col-md-10 col-md-offset-1">
-            <div class="col-md-6">
-              <div class="row icon-setting">
-                <div class="col-md-4">
-                  <i class="wi wi-day-rain-wind fa-5x" style="color:rgb(50, 133, 201);"></i>
+          <form [formGroup]="FormSetting" (submit)="OnSubmit()">
+            <div class="col-md-10 col-md-offset-1">
+              <div class="col-md-12">
+                <div class="row icon-setting">
+                  <div class="col-md-4">
+                    <i class="wi wi-day-rain-wind fa-5x" style="color:rgb(50, 133, 201);"></i>
+                  </div>
+                  <div class="col-md-5">
+                    <h4>ฝน ซ็นเซอร์</h4>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <input type="text" formControlName="raining" class="form-control">
+                      <span>วินาที</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-md-8">
-                  <h4>ฝน ซ็นเซอร์</h4>
+                <div class="row icon-setting">
+                  <div class="col-md-4">
+                    <i class="wi wi-small-craft-advisory fa-5x" style="color:#3c763d;"></i>
+                  </div>
+                  <div class="col-md-5">
+                    <h4>ดิน เซ็นเซอร์</h4>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <input type="number" formControlName="soil" class="form-control">
+                      <span>วินาที</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="row icon-setting">
-                <div class="col-md-4">
-                  <i class="wi wi-small-craft-advisory fa-5x"></i>
+                <div class="row icon-setting">
+                  <div class="col-md-4">
+                    <i class="wi wi-thermometer fa-5x" style="color:#337ab7;"></i>
+                  </div>
+                  <div class="col-md-5">
+                    <h4>อุณภูมิ เซ็นเซอร์</h4>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <input type="number" formControlName="temp" class="form-control">
+                      <span>วินาที</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-md-8">
-                  <h4>ดิน เซ็นเซอร์</h4>
+                <div class="row icon-setting">
+                  <div class="col-md-4">
+                    <i class="wi wi-hot fa-5x" style="color:#8a6d3b;"></i>
+                  </div>
+                  <div class="col-md-5">
+                    <h4>เเสงเเดด เซ็นเซอร์</h4>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <input type="number" formControlName="uv" class="form-control">
+                      <span>วินาที</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="row icon-setting">
-                <div class="col-md-4">
-                  <i class="wi wi-thermometer fa-5x"></i>
+                <div class="row icon-setting">
+                  <div class="col-md-4">
+                    <i class="wi wi-humidity fa-5x" style="color:#31708f;"></i>
+                  </div>
+                  <div class="col-md-5">
+                    <h4>ความชื้น เซ็นเซอร์</h4>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <input type="number" formControlName="moisture" class="form-control">
+                      <span>วินาที</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-md-8">
-                  <h4>อุณภูมิ เซ็นเซอร์</h4>
+                <div class="row icon-setting">
+                  <div class="col-md-4">
+                    <i class="wi wi-wind-beaufort-0 fa-5x" style="color:#a94442;"></i>
+                  </div>
+                  <div class="col-md-5">
+                    <h4>ความเเรงลม เซ็นเซอร์</h4>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <input type="number" formControlName="wind" class="form-control">
+                      <span>วินาที</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="row icon-setting">
-                <div class="col-md-4">
-                  <i class="wi wi-hot fa-5x"></i>
+                <div class="row icon-setting">
+                  <div class="col-md-4">
+                    <i class="fas fa-images fa-5x" style="color:#12b41e;"></i>
+                  </div>
+                  <div class="col-md-5">
+                    <h4>กล้อง</h4>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <input type="number" formControlName="image" class="form-control">
+                      <span>วินาที</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-md-8">
-                  <h4>เเสงเเดด เซ็นเซอร์</h4>
-                </div>
-              </div>
-              <div class="row icon-setting">
-                <div class="col-md-4">
-                  <i class="wi wi-humidity fa-5x"></i>
-                </div>
-                <div class="col-md-8">
-                  <h4>ความชื้น เซ็นเซอร์</h4>
-                </div>
-              </div>
-              <div class="row icon-setting">
-                <div class="col-md-4">
-                  <i class="wi wi-wind-beaufort-0 fa-5x"></i>
-                </div>
-                <div class="col-md-8">
-                  <h4>ความเเรงลม เซ็นเซอร์</h4>
+                <hr>
+                <div class="row text-right">
+                  <button class="btn btn-success" type="submit"><i class="fas fa-save"></i> บันทึก</button>
                 </div>
               </div>
             </div>
-            <div class="col-md-3 col-md-offset-3">
-              <div class="row">
-                <div class="form-grup">
-                  <input type="number" name="" id="" class="from-control">
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-grup">
-                  <input type="number" name="" id="" class="from-control">
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-grup">
-                  <input type="number" name="" id="" class="from-control">
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-grup">
-                  <input type="number" name="" id="" class="from-control">
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-grup">
-                  <input type="number" name="" id="" class="from-control">
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-grup">
-                  <input type="number" name="" id="" class="from-control">
-                </div>
-              </div>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
+</div>

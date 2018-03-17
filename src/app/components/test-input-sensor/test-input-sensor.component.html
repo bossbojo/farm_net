@@ -17,7 +17,7 @@
         <hr>
         <div class="row" *ngIf="tab == 1">
           <div class="col-md-6 col-md-offset-3">
-            <form [formGroup]="TestDataSensor" (click)="OnSubmitDataSensor()">
+            <form [formGroup]="TestDataSensor" (submit)="OnSubmitDataSensor()">
               <div class="form-group">
                 <label for="serial_number">
                   <i class="fas fa-address-book"></i> temp:
@@ -31,13 +31,6 @@
                 </label>
                 <input type="text" class="form-control" id="moisture" formControlName="moisture">
                 <validation [control]="TestDataSensor.controls['moisture']"></validation>
-              </div>
-              <div>
-                <label for="serial_number">
-                  <i class="fas fa-address-book"></i> raining:
-                </label>
-                <input type="checkbox" id="raining" formControlName="raining">
-
               </div>
               <div class="form-group">
                 <label for="serial_number">
@@ -60,6 +53,13 @@
                 <input type="text" class="form-control" id="wind" formControlName="uv">
                 <validation [control]="TestDataSensor.controls['uv']"></validation>
               </div>
+              <div>
+                <label for="serial_number">
+                  <i class="fas fa-address-book"></i> raining:
+                </label>
+                <input type="checkbox" id="raining" formControlName="raining">
+
+              </div>
               <hr>
               <div class="text-right">
                 <button type="submit" class="btn btn-success">
@@ -70,7 +70,7 @@
         </div>
         <div class="row" *ngIf="tab == 2">
           <div class="col-md-6 col-md-offset-3">
-            <form [formGroup]="TestDataSensorSoil" (click)="OnSubmitSensorSoil()">
+            <form [formGroup]="TestDataSensorSoil" (submit)="OnSubmitSensorSoil()">
               <div class="form-group">
                 <label for="soil_data">
                   <i class="fas fa-address-book"></i> soil_data:
@@ -88,7 +88,7 @@
         </div>
         <div class="row" *ngIf="tab == 3">
           <div class="col-md-6 col-md-offset-3">
-            <form (click)="OnSubmitImage()">
+            <form (submit)="OnSubmitImage()">
               <div>
                 <div class="text-center">
                   <img src="{{ImageBase64}}" width="350px" height="350px">
@@ -97,7 +97,7 @@
               </div>
               <hr>
               <div class="text-right">
-                <button  (click)="OnSubmitImage()" class="btn btn-success">
+                <button type="submit" class="btn btn-success">
                   <i class="fas fa-user-plus"></i> ส่งข้อมูล</button>
               </div>
             </form>

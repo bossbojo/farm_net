@@ -11,36 +11,76 @@
           </div>
         </div>
         <hr>
-        <div class="col-md-6 col-md-offset-3" *ngIf="FormEditProfile">
+        <div class="col-md-10 col-md-offset-1" *ngIf="FormEditProfile">
           <form [formGroup]="FormEditProfile" (submit)="OnSubmit()">
-            <div class="form-group">
-              <label for="firstname">
-                <i class="fas fa-address-book"></i> ชื่อ:</label>
-              <input type="text" class="form-control" id="firstname" formControlName="firstname">
-              <validation [control]="FormEditProfile.controls['firstname']"></validation>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="firstname">
+                  <i class="fas fa-address-book"></i> ชื่อ:</label>
+                <input type="text" class="form-control" id="firstname" formControlName="firstname">
+                <validation [control]="FormEditProfile.controls['firstname']"></validation>
+              </div>
+              <div class="form-group">
+                <label for="lastname">
+                  <i class="fas fa-address-card"></i> นานสกุล:</label>
+                <input type="text" class="form-control" id="lastname" formControlName="lastname">
+                <validation [control]="FormEditProfile.controls['lastname']"></validation>
+              </div>
+              <div class="form-group">
+                <label for="email">
+                  <i class="fas fa-envelope-square"></i> อีเมล์:</label>
+                <input type="text" class="form-control" id="email" formControlName="email">
+                <validation [control]="FormEditProfile.controls['email']"></validation>
+              </div>
+              <div class="form-group">
+                <label for="serial_number">
+                  <i class="fas fa-ticket-alt"></i> serial number:</label>
+                <input type="text" class="form-control" id="serial_number" formControlName="serial_number">
+                <validation [control]="FormEditProfile.controls['serial_number']"></validation>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="lastname">
-                <i class="fas fa-address-card"></i> นานสกุล:</label>
-              <input type="text" class="form-control" id="lastname" formControlName="lastname">
-              <validation [control]="FormEditProfile.controls['lastname']"></validation>
-            </div>
-            <div class="form-group">
-              <label for="email">
-                <i class="fas fa-envelope-square"></i> อีเมล์:</label>
-              <input type="text" class="form-control" id="email" formControlName="email">
-              <validation [control]="FormEditProfile.controls['email']"></validation>
-            </div>
-            <div class="form-group">
-              <label for="serial_number">
-                <i class="fas fa-ticket-alt"></i> serial number:</label>
-              <input type="text" class="form-control" id="serial_number" formControlName="serial_number">
-              <validation [control]="FormEditProfile.controls['serial_number']"></validation>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="house_no">
+                  <i class="fas fa-address-book"></i> บ้านเลขที่:</label>
+                <input type="text" class="form-control" id="house_no" formControlName="house_no">
+                <validation [control]="FormEditProfile.controls['house_no']"></validation>
+              </div>
+              <div class="form-group">
+                <label for="village_no">
+                  <i class="fas fa-address-card"></i> หมู่:</label>
+                <input type="text" class="form-control" id="village_no" formControlName="village_no">
+                <validation [control]="FormEditProfile.controls['village_no']"></validation>
+              </div>
+              <div class="form-group">
+                <label for="sub_area">
+                  <i class="fas fa-envelope-square"></i> ตำบล:</label>
+                <input type="text" class="form-control" id="sub_area" formControlName="sub_area">
+                <validation [control]="FormEditProfile.controls['sub_area']"></validation>
+              </div>
+              <div class="form-group">
+                <label for="area">
+                  <i class="fas fa-ticket-alt"></i> อำเภอ:</label>
+                <input type="text" class="form-control" id="area" formControlName="area">
+                <validation [control]="FormEditProfile.controls['area']"></validation>
+              </div>
+              <div class="form-group">
+                <label for="province">
+                  <i class="fas fa-ticket-alt"></i> จังหวัด:</label>
+                <input type="text" class="form-control" id="province" formControlName="province">
+                <validation [control]="FormEditProfile.controls['province']"></validation>
+              </div>
+              <div class="form-group">
+                <label for="postal_code">
+                  <i class="fas fa-ticket-alt"></i> รหัสไปรษณีย์:</label>
+                <input type="text" class="form-control" id="postal_code" formControlName="postal_code">
+                <validation [control]="FormEditProfile.controls['postal_code']"></validation>
+              </div>
             </div>
             <hr>
             <div class="text-right">
               <button type="submit" class="btn btn-success">
-               <i class="fas fa-edit"></i> เเก้ไข</button>
+                <i class="fas fa-edit"></i> เเก้ไข</button>
             </div>
           </form>
         </div>

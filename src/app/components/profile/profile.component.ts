@@ -33,6 +33,14 @@ export class ProfileComponent implements OnInit {
         "lastname": [res.lastname,[Validators.required]],
         "email": [res.email,[Validators.required]],
         "serial_number": [res.serial_number,[Validators.required]],
+        "lat": [res.lat,[Validators.required]],
+        "lng": [res.lng,[Validators.required]],
+        "house_no": [res.house_no,[Validators.required]],
+        "village_no": [res.village_no,[Validators.required]],
+        "sub_area": [res.sub_area,[Validators.required]],
+        "area": [res.area,[Validators.required]],
+        "province": [res.province,[Validators.required]],
+        "postal_code": [res.postal_code,[Validators.required]]
       });
       this.YouPoint = "ตำเเหน่งของคุณ";
       this.latMark = res.lat;
@@ -43,19 +51,13 @@ export class ProfileComponent implements OnInit {
     let point = e.coords;
     this.latMark = point.lat;
     this.lngMark = point.lng;
+    this.FormEditProfile.controls['lat'].setValue(point.lat);
+    this.FormEditProfile.controls['lng'].setValue(point.lng);
   }
   OnSubmit(){
     if(this.FormEditProfile.valid){
       this.global.OnShowLoading();
-      let obj = {
-        "firstname": this.FormEditProfile.controls['firstname'].value,
-        "lastname": this.FormEditProfile.controls['lastname'].value,
-        "email": this.FormEditProfile.controls['email'].value,
-        "serial_number": this.FormEditProfile.controls['serial_number'].value,
-        "lat": this.latMark,
-        "lng": this.lngMark
-      };
-      this.http.requestPut(`edit/profile?Id=${this.User.user_id}`,obj).subscribe((res:any)=>{
+      this.http.requestPut(`edit/profile?Id=${this.User.user_id}`,this.FormEditProfile.value).subscribe((res:any)=>{
         if(res.data){
           jalert('เสร็จสิ้น','เเก้ไขข้อมูลเสร็จเรียบร้อย');
           this.global.OnHiddenLoading();
