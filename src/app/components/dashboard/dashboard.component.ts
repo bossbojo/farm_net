@@ -11,10 +11,10 @@ declare const angular;
 })
 export class DashboardComponent {
   baseUrlimg = baseUrlimg;
+  loadData:boolean = false;
   //map
   lat: number = 51.678418;
   lng: number = 7.809007;
-
   //last sensor
   soil;
   temp;
@@ -29,7 +29,8 @@ export class DashboardComponent {
     { data: [], label: 'อุณหภูมิ' },
     { data: [], label: 'ความชื้น' },
     { data: [], label: 'ความเเรงลม' },
-    { data: [], label: 'เเสงเเดด' }
+    { data: [], label: 'เเสงเเดด' },
+    { data: [], label: 'ปริมาณน้ำฝน' }
   ];
   public lineChartLabels: Array<any> = [];
   public lineChartOptions: any = {
@@ -75,6 +76,14 @@ export class DashboardComponent {
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    },
+    { //  ปริมาณน้ำฝน
+      backgroundColor: 'rgba(255, 191, 0,0.2)',
+      borderColor: 'rgba(255, 191, 0,1)',
+      pointBackgroundColor: 'rgba(255, 191, 0,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(255, 191, 0,0.8)'
     }
   ];
   public lineChartLegend: boolean = true;
@@ -97,6 +106,7 @@ export class DashboardComponent {
         this.lineChartData[2].data.push(data[i].moisture) //ความชื้น
         this.lineChartData[3].data.push(data[i].wind) //ความเเรงลม
         this.lineChartData[4].data.push(data[i].uv) //เเสงเเดด
+        this.lineChartData[4].data.push(data[i].moisture_lavel) //ปริมาณน้ำฝน
         if(i == data.length-1){
           this.temp = data[i].temp;
           this.uv = data[i].uv;
@@ -116,6 +126,9 @@ export class DashboardComponent {
           this.soil = data[i].soil_data;
         }
       }
+      setTimeout(() => {
+        this.loadData = true;
+      }, 1000);
     });
   }
   GetImage(){

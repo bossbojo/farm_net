@@ -23,19 +23,35 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-md-offset-5 box-weather">
+          <div class="col-md-4 col-md-offset-2 box-weather">
             <div class="col-md-6 text-center" *ngIf="!raining">
               <i class="wi wi-day-sunny fa-5x" style="color:yellow;"></i>
             </div>
             <div class="col-md-6 text-center" *ngIf="raining">
-              <i class="wi wi-day-rain-wind fa-5x" style="color:rgb(50, 133, 201);"></i>
+              <i class="wi wi-day-rain-wind fa-5x" style="color:rgb(50,133,201);"></i>
             </div>
             <div class="col-md-6 text-right">
               <p class="title">สภาพอากาศ</p>
               <p *ngIf="!raining">เเสงเเดดสดใส</p>
               <p *ngIf="raining">มีฝนตก</p>
             </div>
-
+          </div>
+          <div class="col-md-3">
+            <div class="panel panel-raindrops">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-3 pading">
+                    <i class="wi wi-raindrops fa-5x"></i>
+                  </div>
+                  <div class="col-xs-9 text-right">
+                    <div class="huge">{{moisture_lavel>0?moisture_lavel:0}}
+                    </div>
+                    <div>มิลลิเมตร</div>
+                    <div>ปริมาณน้ำฝน</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <!-- temp -->
         </div>
@@ -128,11 +144,11 @@
         </div>
         <hr>
         <div class="row" *ngIf="lineChartLabels.length == 0">
-          <div class="col-md-12"  >
+          <div class="col-md-12">
             <img src="assets/images/nodata.jpg" width="100%">
           </div>
         </div>
-        <div class="row" *ngIf="lineChartLabels.length > 0">
+        <div class="row" *ngIf="loadData">
           <div class="col-md-12">
             <div class="panel panel-info">
               <div class="panel-heading">
