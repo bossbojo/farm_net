@@ -1,0 +1,19 @@
+<div class="modal fade" id="Show" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header-success">
+        <button type="button" class="close" (click)="Onclose()">&times;</button>
+        <h4 class="modal-title">
+          กราฟเเสดงผล
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <canvas *ngIf="lineChartData[0].data.length > 0" baseChart width="400" height="250" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+            [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

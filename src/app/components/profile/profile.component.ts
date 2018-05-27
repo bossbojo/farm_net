@@ -33,8 +33,6 @@ export class ProfileComponent implements OnInit {
         "lastname": [res.lastname,[Validators.required]],
         "email": [res.email,[Validators.required]],
         "serial_number": [res.serial_number,[Validators.required]],
-        "lat": [res.lat,[Validators.required]],
-        "lng": [res.lng,[Validators.required]],
         "house_no": [res.house_no,[Validators.required]],
         "village_no": [res.village_no,[Validators.required]],
         "sub_area": [res.sub_area,[Validators.required]],
@@ -46,13 +44,6 @@ export class ProfileComponent implements OnInit {
       this.latMark = res.lat;
       this.lngMark = res.lng;
     });
-  }
-  OnPickMap(e){
-    let point = e.coords;
-    this.latMark = point.lat;
-    this.lngMark = point.lng;
-    this.FormEditProfile.controls['lat'].setValue(point.lat);
-    this.FormEditProfile.controls['lng'].setValue(point.lng);
   }
   OnSubmit(){
     if(this.FormEditProfile.valid){

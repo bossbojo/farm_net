@@ -14,8 +14,6 @@ import { UrlConfig } from '../../configs/url.config';
 })
 export class SignUpComponent implements OnInit {
   FormSignUp: FormGroup;
-  lat: number = 15.13576435459581;
-  lng: number = 104.92775917053223;
   latMark: number = 0;
   lngMark: number = 0;
   YouPoint:string;
@@ -28,8 +26,6 @@ export class SignUpComponent implements OnInit {
       "password": ['', [Validators.required, ValidatorsConfig.comparePassword('confirmpassword')]],
       "confirmpassword": ['', [Validators.required, ValidatorsConfig.comparePassword('password')]],
       "serial_number":['', [Validators.required, ValidatorsConfig.IsSerialNumber]],
-      "lat":  [this.lat, [Validators.required]],
-      "lng":  [this.lng, [Validators.required]],
       "user_type_id":  ['2', [Validators.required]],
       "house_no":  ['', [Validators.required]],
       "village_no":  ['', [Validators.required]],
@@ -42,18 +38,8 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {
   }
-  OnPickMap(e){
-    this.YouPoint = "ตำเเหน่งของคุณ";
-    let point = e.coords;
-    this.latMark = point.lat;
-    this.lngMark = point.lng;
-  }
   OnSubmit() {
     if (this.FormSignUp.valid) {
-      if(this.latMark == 0&&this.lngMark == 0){
-        jalert('เเจ้งเตือน','กรุณาเลือกตำเเหน่งของคุณ');
-        return;
-      }
       this.global.OnShowLoading();
       this.http.requestPost(`signup`, this.FormSignUp.value).subscribe((res: any) => {
         if (res.data) {

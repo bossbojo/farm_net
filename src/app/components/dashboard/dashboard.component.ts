@@ -1,5 +1,5 @@
-import { DatePipe } from '@angular/common';
 import { baseUrlimg } from './../../configs/url.config';
+import { DatePipe } from '@angular/common';
 import { HttpService } from './../../services/http.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -11,7 +11,7 @@ declare const angular;
 })
 export class DashboardComponent {
   baseUrlimg = baseUrlimg;
-  loadData:boolean = false;
+  loadData: boolean = false;
   //map
   lat: number = 51.678418;
   lng: number = 7.809007;
@@ -22,7 +22,9 @@ export class DashboardComponent {
   wind;
   raining;
   moisture;
+  moisture_level;
   image;
+  images;
   // lineChart
   public lineChartData: Array<any> = [
     { data: [], label: 'อุณหภูมิดิน' },
@@ -88,41 +90,84 @@ export class DashboardComponent {
   ];
   public lineChartLegend: boolean = true;
   public lineChartType: string = 'line';
-  public User:any;
-  constructor(private http: HttpService,private Auth:AuthenticationService,private datePipe: DatePipe ) {
-    this.GetData();
+  public User: any;
+  public OpenModal:boolean = false;
+  public DataShow:any;
+  public Label:string;
+  constructor(private http: HttpService, private Auth: AuthenticationService, private datePipe: DatePipe) {
+    this.GetData_moisture();
+    this.GetData_moisture_level();
+    this.GetData_raining();
+    this.GetData_temp();
+    this.GetData_uv();
+    this.GetData_wind();
     this.GetDataSoil();
-    this.GetImage();
+    this.GetImages();
     this.User = this.Auth.User;
     this.lat = this.User.lat;
     this.lng = this.User.lng;
   }
-  GetData() {
-    this.http.requestGet(`get/data/sensor/main`).subscribe((res: any) => {
-      let data = res.data;
-      for (let i = 0; i < data.length; i++) {
-        this.lineChartLabels.push(this.datePipe.transform(data[i].date,'dd/MM/yyyy') + ' ' + data[i].hour+'hr');
-        this.lineChartData[1].data.push(data[i].temp) //อุณหภูมิ
-        this.lineChartData[2].data.push(data[i].moisture) //ความชื้น
-        this.lineChartData[3].data.push(data[i].wind) //ความเเรงลม
-        this.lineChartData[4].data.push(data[i].uv) //เเสงเเดด
-        this.lineChartData[4].data.push(data[i].moisture_lavel) //ปริมาณน้ำฝน
-        if(i == data.length-1){
-          this.temp = data[i].temp;
-          this.uv = data[i].uv;
-          this.wind = data[i].wind;
-          this.raining = data[i].raining;
-          this.moisture = data[i].moisture;
-        }
+  OnShowData(Data,name){
+    this.Label = name;
+    this.OpenModal = true;
+    this.DataShow = Data;
+  }
+  OnCloseModel(){
+    this.DataShow = null;
+    this.OpenModal = false;
+  }
+  GetData_moisture(){
+    this.http.requestGet(`get/moisture-last`).subscribe((res: any) => {
+      if (res.data.moisture >= 700 && res.data.moisture <= 900) {
+        this.moisture = 'ไม่มีความชื้น'
+      } else if (res.data.moisture >= 500 && res.data.moisture <= 699) {
+        this.moisture = 'น้อย'
+      } else if (res.data.moisture >= 300 && res.data.moisture <= 499) {
+        this.moisture = 'ปานกลาง'
+      }else{
+        this.moisture = 'มาก'
       }
     });
   }
-  GetDataSoil(){
+  GetData_moisture_level(){
+    this.http.requestGet(`get/moisture_level-last`).subscribe((res: any) => {
+      if (res.data.moisture_level >= 500 && res.data.moisture_level <= 669) {
+        this.moisture_level = 'ไม่มีฝน'
+      } else if (res.data.moisture_level >= 250 && res.data.moisture_level <= 499) {
+        this.moisture_level = 'น้อย'
+      } else if (res.data.moisture_level >= 101 && res.data.moisture_level <= 249) {
+        this.moisture_level = 'ปานกลาง'
+      }else{
+        this.moisture_level = 'มาก'
+      }
+    });
+  }
+  GetData_raining(){
+    this.http.requestGet(`get/raining-last`).subscribe((res: any) => {
+      this.raining = res.data.raining;
+    });
+  }
+  GetData_temp(){
+    this.http.requestGet(`get/temp-last`).subscribe((res: any) => {
+      this.temp = res.data.temp;
+    });
+  }
+  GetData_uv(){
+    this.http.requestGet(`get/uv-last`).subscribe((res: any) => {
+      this.uv = res.data.uv;
+    });
+  }
+  GetData_wind(){
+    this.http.requestGet(`get/wind-last`).subscribe((res: any) => {
+      this.wind = res.data.wind;
+    });
+  }
+  GetDataSoil() {
     this.http.requestGet(`get/data/sensor/soil`).subscribe((res: any) => {
       let data = res.data;
       for (let i = 0; i < data.length; i++) {
         this.lineChartData[0].data.push(data[i].soil_data) //อุณหภูมิ
-        if(i == data.length-1){
+        if (i == data.length - 1) {
           this.soil = data[i].soil_data;
         }
       }
@@ -131,10 +176,14 @@ export class DashboardComponent {
       }, 1000);
     });
   }
-  GetImage(){
-    this.http.requestGet(`get/image`).subscribe((res: any) => {
-      this.image = res.data.image;
+  GetImages() {
+    this.http.requestGet(`get/all/images`).subscribe((res: any) => {
+      this.images = res.data;
+      this.image = res.data[0].image;
     });
+  }
+  OnChangeImage(img){
+    this.image = img;
   }
   // events
   public chartClicked(e: any): void {
@@ -142,6 +191,6 @@ export class DashboardComponent {
   }
 
   public chartHovered(e: any): void {
-   // console.log(e);
+    // console.log(e);
   }
 }

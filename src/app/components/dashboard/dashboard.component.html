@@ -6,13 +6,13 @@
         <hr>
         <div class="row">
           <div class="col-lg-3 col-md-6">
-            <div class="panel panel-success">
+            <div class="panel panel-success hover-show" (click)="OnShowData(6,'อุณหภูมิดิน')">
               <div class="panel-heading">
                 <div class="row">
                   <div class="col-xs-3 pading">
                     <i class="wi wi-small-craft-advisory fa-5x"></i>
                   </div>
-                  <div class="col-xs-9 text-right">
+                  <div class="col-xs-9 text-right" *ngIf="soil">
                     <div class="huge">{{soil>0?soil:0}}
                       <span>ํ</span>
                     </div>
@@ -37,16 +37,15 @@
             </div>
           </div>
           <div class="col-md-3">
-            <div class="panel panel-raindrops">
+            <div class="panel panel-raindrops hover-show" (click)="OnShowData(5,'ปริมาณน้ำฝน')">
               <div class="panel-heading">
                 <div class="row">
                   <div class="col-xs-3 pading">
                     <i class="wi wi-raindrops fa-5x"></i>
                   </div>
-                  <div class="col-xs-9 text-right">
-                    <div class="huge">{{moisture_lavel>0?moisture_lavel:0}}
+                  <div class="col-xs-9 text-right" *ngIf="moisture_level">
+                    <div class="huge">{{moisture_level}}
                     </div>
-                    <div>มิลลิเมตร</div>
                     <div>ปริมาณน้ำฝน</div>
                   </div>
                 </div>
@@ -58,13 +57,13 @@
         <div class="row">
           <!-- temp -->
           <div class="col-lg-3 col-md-6">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary hover-show" (click)="OnShowData(1,'อุณหภูมิ')">
               <div class="panel-heading">
                 <div class="row">
                   <div class="col-xs-3 pading">
                     <i class="wi wi-thermometer fa-5x"></i>
                   </div>
-                  <div class="col-xs-9 text-right">
+                  <div class="col-xs-9 text-right" *ngIf="temp">
                     <div class="huge">{{temp>0?temp:0}}
                       <span>ํ</span>
                     </div>
@@ -77,15 +76,14 @@
           </div>
           <!-- moisture -->
           <div class="col-lg-3 col-md-6">
-            <div class="panel panel-info">
+            <div class="panel panel-info hover-show" (click)="OnShowData(2,'ความชื้น')">
               <div class="panel-heading">
                 <div class="row">
                   <div class="col-xs-3 pading">
                     <i class="wi wi-humidity fa-5x"></i>
                   </div>
-                  <div class="col-xs-9 text-right">
-                    <div class="huge">{{moisture>0?moisture:0}} %</div>
-                    <div>เปอร์เซนต์</div>
+                  <div class="col-xs-9 text-right" *ngIf="moisture">
+                    <div class="huge">{{moisture}}</div>
                     <div>ความชื้น</div>
                   </div>
                 </div>
@@ -94,15 +92,15 @@
           </div>
           <!-- wind -->
           <div class="col-lg-3 col-md-6">
-            <div class="panel panel-danger">
+            <div class="panel panel-danger hover-show" (click)="OnShowData(3,'ความเเรงลม')">
               <div class="panel-heading">
                 <div class="row">
                   <div class="col-xs-3 pading">
                     <i class="wi wi-wind-beaufort-0 fa-5x"></i>
                   </div>
-                  <div class="col-xs-9 text-right">
+                  <div class="col-xs-9 text-right" *ngIf="wind">
                     <div class="huge">{{wind>0?wind:0}}</div>
-                    <div>บาร์</div>
+                    <div>km/h</div>
                     <div>ความเเรงลม</div>
                   </div>
                 </div>
@@ -111,15 +109,29 @@
           </div>
           <!-- uv -->
           <div class="col-lg-3 col-md-6">
-            <div class="panel panel-warning">
+            <div class="panel panel-warning hover-show" (click)="OnShowData(4,'ระบบเเสงเเดด')">
               <div class="panel-heading">
                 <div class="row">
-                  <div class="col-xs-3 pading">
+                  <div class="col-xs-4 pading">
                     <i class="wi wi-hot fa-5x"></i>
                   </div>
-                  <div class="col-xs-9 text-right">
-                    <div class="huge">{{ uv>0?uv:0}}</div>
-                    <div>อัลตราไวโอเลต</div>
+                  <div class="col-xs-8 text-right" *ngIf="uv">
+                    <div class="text-center box-uv uv1-2" *ngIf="uv >=0 && uv <=2">
+                      Low
+                    </div>
+                    <div class="text-center box-uv uv3-5" *ngIf="uv >=3 && uv <=5">
+                      Moderate
+                    </div>
+                    <div class="text-center box-uv uv6-7" *ngIf="uv >=6 && uv <=7">
+                      High
+                    </div>
+                    <div class="text-center box-uv uv8-10" *ngIf="uv >=8 && uv <=10">
+                      Very High
+                    </div>
+                    <div class="text-center box-uv uv11" *ngIf="uv >= 11">
+                      Extreme
+                    </div>
+                    <div>ระบบเเสงเเดด</div>
                     <div>เเสงเเดด</div>
                   </div>
                 </div>
@@ -128,6 +140,13 @@
           </div>
         </div>
         <div class="row">
+          <div class="col-md-2">
+            Select date for image.
+            <hr>
+            <select name="showImg" #showImg multiple class="form-control"  style="height:290px;" (click)="OnChangeImage(showImg.value)">
+              <option *ngFor="let imagess of images" value="{{imagess.image}}">{{imagess.create_dt |  date:'dd/MM/yyyy' }}</option>
+            </select>
+          </div>
           <div class="col-md-6">
             <div class="image-show" *ngIf="image">
               <img [src]="baseUrlimg+image">
@@ -136,48 +155,13 @@
               <img src="assets/images/no-thumbnail.png">
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-4">
             <agm-map [latitude]="lat" [longitude]="lng">
               <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
             </agm-map>
           </div>
         </div>
-        <hr>
-        <div class="row" *ngIf="lineChartLabels.length == 0">
-          <div class="col-md-12">
-            <img src="assets/images/nodata.jpg" width="100%">
-          </div>
-        </div>
-        <div class="row" *ngIf="loadData">
-          <div class="col-md-12">
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <div class="row">
-                  <label class="checkbox-inline">
-                    เเสดงตาม :
-                  </label>
-                  <label class="checkbox-inline">
-                    <input type="radio" name="sortby" checked> ชั่วโมง
-                  </label>
-                  <!-- <label class="checkbox-inline">
-                    <input type="radio" value="" name="sortby"> วัน
-                  </label>
-                  <label class="checkbox-inline">
-                    <input type="radio" value="" name="sortby"> เดือน
-                  </label>
-                  <label class="checkbox-inline">
-                    <input type="radio" value="" name="sortby"> ปี
-                  </label> -->
-                </div>
-              </div>
-            </div>
-          </div>
-          <canvas baseChart width="400" height="250" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-            [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)">
-          </canvas>
-        </div>
-        <hr>
       </div>
     </div>
   </div>
+  <app-modal-grap *ngIf="OpenModal" [Open]="OpenModal" [Data]="DataShow" [Labels]="Label" (Close)="OnCloseModel()"></app-modal-grap>
