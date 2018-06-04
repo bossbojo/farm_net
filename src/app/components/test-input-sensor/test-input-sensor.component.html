@@ -4,79 +4,51 @@
       <div class="panel-body shadow">
         <h2 class="text-center">ทดสอบส่งข้อมูล</h2>
         <ul class="nav nav-tabs">
-          <li [ngClass]="{'active':tab==1}">
-            <a (click)="tab = 1">เซ็นเซอร์ทั่วไป</a>
-          </li>
           <li [ngClass]="{'active':tab==2}">
-            <a (click)="tab = 2">เซ็นเซอร์ดิน</a>
+            <a (click)="tab = 2">เซ็นเซอร์</a>
           </li>
           <li [ngClass]="{'active':tab==3}">
-            <a (click)="tab = 3">อัพโหลดรูป</a>
+            <a (click)="tab = 3">กล้อง</a>
           </li>
         </ul>
         <hr>
-        <div class="row" *ngIf="tab == 1">
-          <div class="col-md-6 col-md-offset-3">
-            <form [formGroup]="TestDataSensor" (submit)="OnSubmitDataSensor()">
-              <div class="form-group">
-                <label for="serial_number">
-                  <i class="fas fa-address-book"></i> temp:
-                </label>
-                <input type="text" class="form-control" id="temp" formControlName="temp">
-                <validation [control]="TestDataSensor.controls['temp']"></validation>
-              </div>
-              <div class="form-group">
-                <label for="serial_number">
-                  <i class="fas fa-address-book"></i> moisture:
-                </label>
-                <input type="text" class="form-control" id="moisture" formControlName="moisture">
-                <validation [control]="TestDataSensor.controls['moisture']"></validation>
-              </div>
-              <div class="form-group">
-                <label for="serial_number">
-                  <i class="fas fa-address-book"></i> moisture_level:
-                </label>
-                <input type="text" class="form-control" id="moisture_level" formControlName="moisture_level">
-                <validation [control]="TestDataSensor.controls['moisture_level']"></validation>
-              </div>
-              <div class="form-group">
-                <label for="serial_number">
-                  <i class="fas fa-address-book"></i> wind:
-                </label>
-                <input type="text" class="form-control" id="wind" formControlName="wind">
-                <validation [control]="TestDataSensor.controls['wind']"></validation>
-              </div>
-              <div class="form-group">
-                <label for="serial_number">
-                  <i class="fas fa-address-book"></i> uv:
-                </label>
-                <input type="text" class="form-control" id="wind" formControlName="uv">
-                <validation [control]="TestDataSensor.controls['uv']"></validation>
-              </div>
-              <div>
-                <label for="serial_number">
-                  <i class="fas fa-address-book"></i> raining:
-                </label>
-                <input type="checkbox" id="raining" formControlName="raining">
-
-              </div>
-              <hr>
-              <div class="text-right">
-                <button type="submit" class="btn btn-success">
-                  <i class="fas fa-user-plus"></i> ส่งข้อมูล</button>
-              </div>
-            </form>
-          </div>
-        </div>
         <div class="row" *ngIf="tab == 2">
-          <div class="col-md-6 col-md-offset-3">
-            <form [formGroup]="TestDataSensorSoil" (submit)="OnSubmitSensorSoil()">
-              <div class="form-group">
-                <label for="soil_data">
-                  <i class="fas fa-address-book"></i> soil_data:
-                </label>
-                <input type="text" class="form-control" id="soil_data" formControlName="soil_data">
-                <validation [control]="TestDataSensorSoil.controls['soil_data']"></validation>
+          <div class="col-md-8 col-md-offset-2">
+            <form [formGroup]="TestDataSensor" (submit)="OnSubmit()">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="soil_data">
+                      <i class="fas fa-address-book"></i> ใส่ข้อมูลเซ็นเซอร์:
+                    </label>
+                    <ng-container *ngIf="TestDataSensor.controls['select'].value == 2">
+                      <br>
+                        <input type="checkbox"  id="sensor_data" formControlName="sensor_data"> : ฝนตก
+                    </ng-container>
+                    <ng-container *ngIf="TestDataSensor.controls['select'].value != 2">
+                      <input type="number" class="form-control" id="sensor_data" formControlName="sensor_data">
+                      <validation [control]="TestDataSensor.controls['sensor_data']"></validation>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="soil_data">
+                      <i class="fas fa-address-book"></i> เลือกเซ็นเซอร์:
+                    </label>
+                    <select class="form-control" formControlName="select">
+                      <option value="">Please select</option>
+                      <option value="1">wind</option>
+                      <option value="2">raining</option>
+                      <option value="3">temp</option>
+                      <option value="4">moisture</option>
+                      <option value="5">moisture level</option>
+                      <option value="6">uv</option>
+                      <option value="7">soil</option>
+                    </select>
+                    <validation [control]="TestDataSensor.controls['select']"></validation>
+                  </div>
+                </div>
               </div>
               <hr>
               <div class="text-right">
@@ -91,7 +63,8 @@
             <form (submit)="OnSubmitImage()">
               <div>
                 <div class="text-center">
-                  <img src="{{ImageBase64}}" width="350px" height="350px">
+                  <img *ngIf="ImageBase64" src="{{ImageBase64}}" width="350px" height="350px">
+                  <img *ngIf="!ImageBase64" src="assets\images\no-thumbnail.png" width="350px" height="350px" style="object-fit: cover;">
                 </div>
                 <input type="file" accept="image/*" id="avatar" (change)="onFileChange($event)">
               </div>

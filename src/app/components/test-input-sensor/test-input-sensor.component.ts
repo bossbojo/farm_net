@@ -13,44 +13,45 @@ import { jalert } from '../../configs/alert.config';
 })
 export class TestInputSensorComponent implements OnInit {
   TestDataSensor: FormGroup;
-  TestDataSensorSoil: FormGroup;
   User: any;
-  tab: string = '1';
+  tab: string = '2';
   ImageBase64: string;
   constructor(private build: FormBuilder, private http: HttpService, private route: Router, private global: GlobalValueService) {
     this.User = this.global.User;
     this.SetDataSensor();
-    this.SetDataSensorSoil();
   }
   ngOnInit() { }
   SetDataSensor() {
     this.TestDataSensor = this.build.group({
-      temp: ['', [Validators.required]],
-      moisture: ['', [Validators.required]],
-      raining: ['', [Validators.required]],
-      moisture_level: ['', [Validators.required]],
-      wind: ['', [Validators.required]],
-      uv: ['', [Validators.required]],
+      sensor_data: ['', [Validators.required]],
+      select: ['', [Validators.required]]
     });
   }
-  SetDataSensorSoil() {
-    this.TestDataSensorSoil = this.build.group({
-      soil_data: ['', [Validators.required]]
-    });
+  OnSubmit() {
+    if (this.TestDataSensor.value.select == 1)
+      this.Sensor_wind();
+    else if (this.TestDataSensor.value.select == 2)
+      this.Sensor_raining();
+    else if (this.TestDataSensor.value.select == 3)
+      this.Sensor_temp();
+    else if (this.TestDataSensor.value.select == 4)
+      this.Sensor_moisture();
+    else if (this.TestDataSensor.value.select == 5)
+      this.Sensor_moisture_level();
+    else if (this.TestDataSensor.value.select == 6)
+      this.Sensor_uv();
+    else if (this.TestDataSensor.value.select == 7)
+      this.SensorSoil();
   }
-  OnSubmitDataSensor() {
+  //1
+  Sensor_wind() {
     if (this.TestDataSensor.valid) {
       this.global.OnShowLoading();
       let obj = {
         "serial_number": this.User.serial_number,
-        "temp": this.TestDataSensor.controls['temp'].value,
-        "moisture": this.TestDataSensor.controls['moisture'].value,
-        "raining": this.TestDataSensor.controls['raining'].value,
-        "moisture_level": this.TestDataSensor.controls['moisture_level'].value,
-        "wind": this.TestDataSensor.controls['wind'].value,
-        "uv": this.TestDataSensor.controls['uv'].value
+        "wind": this.TestDataSensor.controls['sensor_data'].value
       }
-      this.http.requestPost(`create/data_sensor`, obj).subscribe((res: any) => {
+      this.http.requestPost(`save/wind`, obj).subscribe((res: any) => {
         if (res.data) {
           this.global.OnHiddenLoading();
           jalert('เสร็จสิ้น', 'เพิ่มข้อมูลเสร็จเรียบร้อย');
@@ -60,29 +61,144 @@ export class TestInputSensorComponent implements OnInit {
         this.global.OnHiddenLoading();
         jalert('เเจ้งเตือน', res.data.Message);
       });
+    } else {
+      jalert('เเจ้งเตือน', 'กรุณาใส่ข้อมูล');
     }
   }
-  OnSubmitSensorSoil() {
-    if (this.TestDataSensorSoil.valid) {
+  //2
+  Sensor_raining() {
+    if (this.TestDataSensor.valid) {
       this.global.OnShowLoading();
       let obj = {
         "serial_number": this.User.serial_number,
-        "soil_data": this.TestDataSensorSoil.controls['soil_data'].value
+        "raining": this.TestDataSensor.controls['sensor_data'].value
       }
-      this.http.requestPost(`create/sensor_soil`, obj).subscribe((res: any) => {
+      this.http.requestPost(`save/raining`, obj).subscribe((res: any) => {
         if (res.data) {
           this.global.OnHiddenLoading();
           jalert('เสร็จสิ้น', 'เพิ่มข้อมูลเสร็จเรียบร้อย');
-          this.TestDataSensorSoil.reset();
+          this.TestDataSensor.reset();
         }
       }, (res: any) => {
         this.global.OnHiddenLoading();
         jalert('เเจ้งเตือน', res.data.Message);
       });
+    } else {
+      jalert('เเจ้งเตือน', 'กรุณาใส่ข้อมูล');
+    }
+  }
+  //3
+  Sensor_temp() {
+    if (this.TestDataSensor.valid) {
+      this.global.OnShowLoading();
+      let obj = {
+        "serial_number": this.User.serial_number,
+        "temp": this.TestDataSensor.controls['sensor_data'].value
+      }
+      this.http.requestPost(`save/temp`, obj).subscribe((res: any) => {
+        if (res.data) {
+          this.global.OnHiddenLoading();
+          jalert('เสร็จสิ้น', 'เพิ่มข้อมูลเสร็จเรียบร้อย');
+          this.TestDataSensor.reset();
+        }
+      }, (res: any) => {
+        this.global.OnHiddenLoading();
+        jalert('เเจ้งเตือน', res.data.Message);
+      });
+    } else {
+      jalert('เเจ้งเตือน', 'กรุณาใส่ข้อมูล');
+    }
+  }
+  //4
+  Sensor_moisture() {
+    if (this.TestDataSensor.valid) {
+      this.global.OnShowLoading();
+      let obj = {
+        "serial_number": this.User.serial_number,
+        "moisture": this.TestDataSensor.controls['sensor_data'].value
+      }
+      this.http.requestPost(`save/moisture`, obj).subscribe((res: any) => {
+        if (res.data) {
+          this.global.OnHiddenLoading();
+          jalert('เสร็จสิ้น', 'เพิ่มข้อมูลเสร็จเรียบร้อย');
+          this.TestDataSensor.reset();
+        }
+      }, (res: any) => {
+        this.global.OnHiddenLoading();
+        jalert('เเจ้งเตือน', res.data.Message);
+      });
+    } else {
+      jalert('เเจ้งเตือน', 'กรุณาใส่ข้อมูล');
+    }
+  }
+  //5
+  Sensor_moisture_level() {
+    if (this.TestDataSensor.valid) {
+      this.global.OnShowLoading();
+      let obj = {
+        "serial_number": this.User.serial_number,
+        "moisture_level": this.TestDataSensor.controls['sensor_data'].value
+      }
+      this.http.requestPost(`save/moisture_level`, obj).subscribe((res: any) => {
+        if (res.data) {
+          this.global.OnHiddenLoading();
+          jalert('เสร็จสิ้น', 'เพิ่มข้อมูลเสร็จเรียบร้อย');
+          this.TestDataSensor.reset();
+        }
+      }, (res: any) => {
+        this.global.OnHiddenLoading();
+        jalert('เเจ้งเตือน', res.data.Message);
+      });
+    } else {
+      jalert('เเจ้งเตือน', 'กรุณาใส่ข้อมูล');
+    }
+  }
+  //6
+  Sensor_uv() {
+    if (this.TestDataSensor.valid) {
+      this.global.OnShowLoading();
+      let obj = {
+        "serial_number": this.User.serial_number,
+        "uv": this.TestDataSensor.controls['sensor_data'].value
+      }
+      this.http.requestPost(`save/uv`, obj).subscribe((res: any) => {
+        if (res.data) {
+          this.global.OnHiddenLoading();
+          jalert('เสร็จสิ้น', 'เพิ่มข้อมูลเสร็จเรียบร้อย');
+          this.TestDataSensor.reset();
+        }
+      }, (res: any) => {
+        this.global.OnHiddenLoading();
+        jalert('เเจ้งเตือน', res.data.Message);
+      });
+    } else {
+      jalert('เเจ้งเตือน', 'กรุณาใส่ข้อมูล');
+    }
+  }
+  //7
+  SensorSoil() {
+    if (this.TestDataSensor.valid) {
+      this.global.OnShowLoading();
+      let obj = {
+        "serial_number": this.User.serial_number,
+        "soil_data": this.TestDataSensor.controls['sensor_data'].value
+      }
+      this.http.requestPost(`create/sensor_soil`, obj).subscribe((res: any) => {
+        if (res.data) {
+          this.global.OnHiddenLoading();
+          jalert('เสร็จสิ้น', 'เพิ่มข้อมูลเสร็จเรียบร้อย');
+          this.TestDataSensor.reset();
+        }
+      }, (res: any) => {
+        this.global.OnHiddenLoading();
+        jalert('เเจ้งเตือน', res.data.Message);
+      });
+    } else {
+      jalert('เเจ้งเตือน', 'กรุณาใส่ข้อมูล');
     }
   }
   OnSubmitImage() {
-    if(this.ImageBase64){
+    if (this.ImageBase64) {
       this.global.OnShowLoading();
       let obj = {
         "serial_number": this.User.serial_number,

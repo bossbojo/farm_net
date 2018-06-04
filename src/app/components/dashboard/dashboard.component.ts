@@ -118,15 +118,7 @@ export class DashboardComponent {
   }
   GetData_moisture(){
     this.http.requestGet(`get/moisture-last`).subscribe((res: any) => {
-      if (res.data.moisture >= 700 && res.data.moisture <= 900) {
-        this.moisture = 'ไม่มีความชื้น'
-      } else if (res.data.moisture >= 500 && res.data.moisture <= 699) {
-        this.moisture = 'น้อย'
-      } else if (res.data.moisture >= 300 && res.data.moisture <= 499) {
-        this.moisture = 'ปานกลาง'
-      }else{
-        this.moisture = 'มาก'
-      }
+        this.moisture = res.data.moisture;
     });
   }
   GetData_moisture_level(){
@@ -168,7 +160,15 @@ export class DashboardComponent {
       for (let i = 0; i < data.length; i++) {
         this.lineChartData[0].data.push(data[i].soil_data) //อุณหภูมิ
         if (i == data.length - 1) {
-          this.soil = data[i].soil_data;
+          if (data[i].soil_data >= 700  && data[i].soil_data <= 900) {
+            this.soil = 'ไม่มีความชื้น'
+          } else if (data[i].soil_data >= 500  && data[i].soil_data <= 699) {
+            this.soil = 'น้อย'
+          } else if (data[i].soil_data >= 499 && data[i].soil_data <= 300 ) {
+            this.soil = 'ปานกลาง'
+          }else{
+            this.soil = 'มาก'
+          }
         }
       }
       setTimeout(() => {
