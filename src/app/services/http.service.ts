@@ -36,15 +36,11 @@ export class HttpService {
         let responseData: any = {};
         try {
             responseData.data = response.json();
-            if(responseData.status == 401){
-                this.authenticated.logout();
-            }
         }
         catch (e) {
             if (response.text()) {
                 responseData.data = response.text()
             }
-            
         }
         responseData.status = response.status;
         responseData.statusText = response.statusText;

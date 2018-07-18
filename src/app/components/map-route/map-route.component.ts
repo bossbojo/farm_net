@@ -15,7 +15,8 @@ export class MapRouteComponent {
     "history-sensor":"ประวัติเซ็นเซอร์",
     "profile":"โปรฟล์",
     "change-password":"เปลี่ยนรหัสผ่าน",
-    "setting":"ตั้งค่าเซ็นเซอร์"
+    "setting":"ตั้งค่าเซ็นเซอร์",
+    "create-sensor":"สร้างเซ็นเซอร์"
   }
   constructor(public Auth:AuthenticationService,public Global:GlobalValueService) {
     

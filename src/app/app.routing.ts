@@ -52,6 +52,11 @@ export const RoutesList: Routes = [
         canActivate:[AuthenticationGuard]
     },
     {
+        path: Url.CreateSensor,
+        loadChildren: 'app/components/create-sensor/create-sensor.module.ts#CreateSensorModule',
+        canActivate:[AuthenticationGuard]
+    },
+    {
         path: '**',
         redirectTo:Url.Home,
         pathMatch: 'full'

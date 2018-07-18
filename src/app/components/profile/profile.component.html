@@ -10,8 +10,8 @@
               <div class="form-group">
                 <label for="firstname">
                   <i class="fas fa-address-book"></i> ชื่อ:</label>
-                <input type="text" class="form-control" id="firstname" formControlName="firstname">
-                <validation [control]="FormEditProfile.controls['firstname']"></validation>
+                  <input type="text" class="form-control" id="firstname" formControlName="firstname">
+                  <validation [control]="FormEditProfile.controls['firstname']"></validation>
               </div>
               <div class="form-group">
                 <label for="lastname">
@@ -27,9 +27,7 @@
               </div>
               <div class="form-group">
                 <label for="serial_number">
-                  <i class="fas fa-ticket-alt"></i> serial number:</label>
-                <input type="text" class="form-control" id="serial_number" formControlName="serial_number">
-                <validation [control]="FormEditProfile.controls['serial_number']"></validation>
+                  <i class="fas fa-ticket-alt"></i> serial number:</label>{{FormEditProfile.controls['serial_number'].value}}
               </div>
             </div>
             <div class="col-md-6">

@@ -25,7 +25,7 @@ export class SignUpComponent implements OnInit {
       "username":  ['', [Validators.required]],
       "password": ['', [Validators.required, ValidatorsConfig.comparePassword('confirmpassword')]],
       "confirmpassword": ['', [Validators.required, ValidatorsConfig.comparePassword('password')]],
-      "serial_number":['', [Validators.required, ValidatorsConfig.IsSerialNumber]],
+      "serial_number":[this.makeid().toLocaleUpperCase(), [Validators.required, ValidatorsConfig.IsSerialNumber]],
       "user_type_id":  ['2', [Validators.required]],
       "house_no":  ['', [Validators.required]],
       "village_no":  ['', [Validators.required]],
@@ -38,9 +38,18 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {
   }
+  makeid() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (var i = 0; i < 13; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return text;
+  }
   OnSubmit() {
     if (this.FormSignUp.valid) {
       this.global.OnShowLoading();
+      console.log(this.FormSignUp.value);
+      
       this.http.requestPost(`signup`, this.FormSignUp.value).subscribe((res: any) => {
         if (res.data) {
           jconfirm('สำเร็จ', 'คุณต้องการต้องการเข้าสู่ระบบ?').then((suc: any) => {

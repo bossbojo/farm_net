@@ -1,0 +1,352 @@
+<div class="container">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body shadow">
+        <h2 class="text-center">สร้างเซ็นเซอร์</h2>
+        <hr>
+        <div class="row">
+          <div class="col-md-12 text-right">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#CreateSensorModal">
+              <i class="fas fa-plus-circle"></i> เพิ่มเซ็นเซอร์</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>SENSOR NUMBER</th>
+                  <th>ชื่อเซ็นเซอร์</th>
+                  <th>ประเภทเซ็นเซอร์</th>
+                  <th>ตัวเลือก</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="MySensor">
+                <tr *ngFor="let data of MySensor">
+                  <td>{{data.RunId}}</td>
+                  <td>{{data.sensor_name}}</td>
+                  <td>{{SensorTypeData[data.sensor_type_id]}}</td>
+                  <td class="text-center">
+                    <a class="btn btn-default btn-xs" (click)="OnOpenModal(data.sensor_type_id,data.Id)">
+                      <i class="fas fa-plus"></i> เพิ่มข้อมูลเซ็นเซอร์</a>
+                    <a class="btn btn-info btn-xs" (click)="GetDataSensorById(data.sensor_type_id,data.Id)">
+                      <i class="fas fa-history"></i> ประวัติเซ็นเซอร์</a>
+                    <a class="btn btn-warning btn-xs" data-toggle="modal" (click)="IdEdit = data.Id ; this.FromEditSensor.controls['sensor_name'].setValue( data.sensor_name );"
+                      data-target="#EditSensorModal">
+                      <i class="fas fa-edit"></i> เเก้ไข</a>
+                    <a class="btn btn-danger btn-xs" (click)="OnRemove(data.Id)">
+                      <i class="fas fa-trash-alt"></i> ลบ</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div *ngIf="!MySensor">
+              <h3 class="text-center">
+                กรุณาคลิกที่
+                <button class="btn btn-primary" data-toggle="modal" data-target="#CreateSensorModal">
+                  <i class="fas fa-plus-circle"></i> เพิ่มเซ็นเซอร์</button>
+                เพื่อทำการสร้างเซ็นเซอร์
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Create Sensor -->
+<div class="modal fade" id="CreateSensorModal" role="dialog">
+  <form [formGroup]="FromCreateSensor" (submit)="OnSubmitCreate()">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">สร้างเซ็นเซอร์</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="usr">Name:</label>
+            <input formControlName="sensor_name" type="text" class="form-control" id="usr">
+          </div>
+          <div class="form-group">
+            <label for="sel1">Select list:</label>
+            <select class="form-control" id="sel1" formControlName="sensor_type_id">
+              <option value="">กรุณาเลือก</option>
+              <option value="{{datas.Id}}" *ngFor="let datas of SensorType">{{datas.sensor_type_name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- Edit Sensor -->
+<div class="modal fade" id="EditSensorModal" role="dialog">
+  <form [formGroup]="FromEditSensor" (submit)="OnSubmitEdit()">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">เเก้ไขเซ็นเซอร์</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="usr">Name:</label>
+            <input formControlName="sensor_name" type="text" class="form-control" id="usr">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- History Sensor -->
+<div class="modal fade" id="HistroySensorModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">ประวัติเซ็นเซอร์
+          <span *ngIf="TypeSensor">{{TypeSensor}}</span>
+        </h4>
+      </div>
+      <div class="modal-body" *ngIf="DataShowById">
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th class="text-center">ค่าเซ็นเซอร์</th>
+                  <th class="text-center">วัน/เดือน/ปี</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let DataShowByIds of DataShowById">
+                  <td *ngIf="DataShowByIds.image">
+                    <img src="{{baseUrlimg}}/{{DataShowByIds.image}}" width="120px" alt="">
+                  </td>
+                  <td *ngIf="DataShowByIds.moisture">{{DataShowByIds.moisture?DataShowByIds.moisture:0}}</td>
+                  <td *ngIf="DataShowByIds.moisture_level">{{DataShowByIds.moisture_level?DataShowByIds.moisture_level:0}}</td>
+                  <td *ngIf="DataShowByIds.raining||DataShowByIds.raining == false">
+                    {{DataShowByIds.raining}}
+                  </td>
+                  <td *ngIf="DataShowByIds.temp">{{DataShowByIds.temp?DataShowByIds.temp:0}}</td>
+                  <td *ngIf="DataShowByIds.uv">{{DataShowByIds.uv?DataShowByIds.uv:0}}</td>
+                  <td *ngIf="DataShowByIds.wind">{{DataShowByIds.wind?DataShowByIds.wind:0}}</td>
+                  <td *ngIf="DataShowByIds.soil_data">{{DataShowByIds.soil_data?DataShowByIds.soil_data:0}}</td>
+                  <td *ngIf="DataShowByIds.created_dt">{{DataShowByIds.created_dt | date : 'dd / MMMM / yyyy'}}</td>
+                  <td *ngIf="DataShowByIds.create_dt">{{DataShowByIds.create_dt | date : 'dd / MMMM / yyyy'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--SensorCamera-->
+<div class="modal fade" id="SensorCamera" role="dialog">
+  <form [formGroup]="FromEditSensor" (submit)="OnSubmitCamera()">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">สร้างข้อมูลทดสอบกล้อง</h4>
+        </div>
+        <div class="modal-body">
+          <div class="text-center">
+            <img *ngIf="ImageBase64" src="{{ImageBase64}}" width="350px" height="350px">
+            <img *ngIf="!ImageBase64" src="assets\images\no-thumbnail.png" width="350px" height="350px" style="object-fit: cover;">
+          </div>
+          <input type="file" class="form-control" accept="image/*" id="avatar" (change)="onFileChange($event)">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!--SensorMoisture-->
+<div class="modal fade" id="SensorMoisture" role="dialog">
+  <form [formGroup]="FromSensorMoisture" (submit)="OnSubmitMoisture()">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">สร้างข้อมูลทดสอบความชื้น</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input formControlName="moisture" type="text" placeholder="ความชื้น" class="form-control" id="usr">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!--SensorMoistureLevel-->
+<div class="modal fade" id="SensorMoistureLevel" role="dialog">
+  <form [formGroup]="FromSensorMoistureLevel" (submit)="OnSubmitMoistureLevel()">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">สร้างข้อมูลทดสอบระดับความชื้น</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input formControlName="moisture_level" type="text" placeholder="ระบบความชื้น" class="form-control" id="usr">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!--SensorRaining-->
+<div class="modal fade" id="SensorRaining" role="dialog">
+  <form [formGroup]="FromSensorRaining" (submit)="OnSubmitRaining()">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">สร้างข้อมูลทดสอบสภาพอากาศ</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group text-center">
+            <label class="radio-inline">
+              <input type="radio" formControlName="raining" value="1">ฝนตก</label>
+            <label class="radio-inline">
+              <input type="radio" formControlName="raining" value="0">อากาศดี</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!--SensorUv-->
+<div class="modal fade" id="SensorTemp" role="dialog">
+  <form [formGroup]="FromSensorTemp" (submit)="OnSubmitTemp()">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">สร้างข้อมูลทดสอบระดับอุณหภูมิ</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input formControlName="temp" type="text" placeholder="ระดับอุณหภูมิ" class="form-control" id="usr">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!--SensorUv-->
+<div class="modal fade" id="SensorUV" role="dialog">
+  <form [formGroup]="FromSensorUv" (submit)="OnSubmitUv()">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">สร้างข้อมูลทดสอบระดับเเสงอาทิตย์</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input formControlName="uv" type="text" placeholder="ระดับเเสงอาทิตย์" class="form-control" id="usr">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!--SensorWind-->
+<div class="modal fade" id="SensorWind" role="dialog">
+  <form [formGroup]="FromSensorWind" (submit)="OnSubmitWind()">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">สร้างข้อมูลทดสอบความเร็วลม</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input formControlName="wind" type="text" placeholder="ความเร็วลม" class="form-control" id="usr">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!--SensorSoil-->
+<div class="modal fade" id="SensorSoil" role="dialog">
+  <form [formGroup]="FromSensorSoil" (submit)="OnSubmitSoil()">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">สร้างข้อมูลทดสอบระดับอุณหภูมิดิน</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input formControlName="soil" type="text" placeholder="อุณหภูมิดิน" class="form-control" id="usr">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -5,24 +5,37 @@
         <h2 class="text-center">กราฟสรุปผล</h2>
         <hr>
         <div class="row">
-          <div class="col-lg-3 col-md-6">
-            <div class="panel panel-success hover-show" (click)="OnShowData(6,'อุณหภูมิดิน')">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-3 pading">
-                    <i class="wi wi-small-craft-advisory fa-5x"></i>
-                  </div>
-                  <div class="col-xs-9 text-right" *ngIf="soil">
-                    <div class="huge">{{soil}}
-                    </div>
-                    <div>ความชื้นในดิน</div>
-                    <div>อุณหภูมิดิน</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="col-md-12">
+            <ul class="nav nav-tabs">
+              <li [ngClass]="{'active':tab == 'All'}">
+                <a (click)="tab = 'All'">ทั้งหมด</a>
+              </li>
+              <li [ngClass]="{'active':tab == 'อุณหภูมิดิน'}">
+                <a (click)="tab = 'อุณหภูมิดิน'">อุณหภูมิดิน</a>
+              </li>
+              <li [ngClass]="{'active':tab == 'อุณหภูมิ'}">
+                <a (click)="tab = 'อุณหภูมิ'">อุณหภูมิ</a>
+              </li>
+              <li [ngClass]="{'active':tab == 'ปริมาณน้ำฝน'}">
+                <a (click)="tab = 'ปริมาณน้ำฝน'">ปริมาณน้ำฝน</a>
+              </li>
+              <li [ngClass]="{'active':tab == 'ความชื้น'}">
+                <a (click)="tab = 'ความชื้น'">ความชื้น</a>
+              </li>
+              <li [ngClass]="{'active':tab == 'ความเเรงลม'}">
+                <a (click)="tab = 'ความเเรงลม'">ความเเรงลม</a>
+              </li>
+              <li [ngClass]="{'active':tab == 'เเสงเเดด'}">
+                <a (click)="tab = 'เเสงเเดด'">เเสงเเดด</a>
+              </li>
+              <li [ngClass]="{'active':tab == 'image'}">
+                <a (click)="tab = 'image'">กล้องเเละตำเเหน่ง</a>
+              </li>
+            </ul>
           </div>
-          <div class="col-md-4 col-md-offset-2 box-weather">
+        </div>
+        <div class="row" *ngIf="raining||raining == false">
+          <div class="col-md-4 col-md-offset-8 box-weather">
             <div class="col-md-6 text-center" *ngIf="!raining">
               <i class="wi wi-day-sunny fa-5x" style="color:yellow;"></i>
             </div>
@@ -35,132 +48,193 @@
               <p *ngIf="raining">มีฝนตก</p>
             </div>
           </div>
-          <div class="col-md-3">
-            <div class="panel panel-raindrops hover-show" (click)="OnShowData(5,'ปริมาณน้ำฝน')">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-3 pading">
-                    <i class="wi wi-raindrops fa-5x"></i>
-                  </div>
-                  <div class="col-xs-9 text-right" *ngIf="moisture_level">
-                    <div class="huge">{{moisture_level}}
-                    </div>
-                    <div>ปริมาณน้ำฝน</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- temp -->
         </div>
-        <div class="row">
-          <!-- temp -->
-          <div class="col-lg-3 col-md-6">
-            <div class="panel panel-primary hover-show" (click)="OnShowData(1,'อุณหภูมิ')">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-3 pading">
-                    <i class="wi wi-thermometer fa-5x"></i>
-                  </div>
-                  <div class="col-xs-9 text-right" *ngIf="temp">
-                    <div class="huge">{{temp>0?temp:0}}
-                      <span>ํ</span>
+        <ng-container>
+          <div class="row">
+            <div class="col-md-12" *ngIf="imagesSensor == 0 && lineChartDataUv.length == 0 && lineChartDataWind.length == 0 && lineChartDataMoisture.length == 0 &&lineChartDataTemp.length == 0 && lineChartDataSoil.length == 0 && lineChartDataMoistureLevel.length == 0">
+              <div class="text-center" style="padding: 100px;">
+                  <button [routerLink]="['/',Url.CreateSensor]" class="btn btn-info"><h3><i class="fas fa-plus-circle"></i> กรุณาสร้างเซ็นเซอร์ของคุณ</h3></button> 
+              </div>
+            </div>
+            <!-- moisture_level -->
+            <div class="col-lg-12 col-md-12" *ngIf="tab == 'All' || tab == 'ปริมาณน้ำฝน'">
+              <div class="panel panel-raindrops" *ngIf="lineChartDataMoistureLevel.length > 0">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-xs-1 pading">
+                      <i class="wi wi-raindrops fa-5x"></i>
                     </div>
-                    <div>องศาเซลเซียส</div>
-                    <div>อุณหภูมิ</div>
+                    <div class="col-xs-9 pading">
+                      <canvas *ngIf="lineChartDataMoistureLevel.length > 0" baseChart width="250" height="80" [datasets]="lineChartDataMoistureLevel"
+                        [labels]="lineChartLabelsMoistureLevel" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
+                        [chartType]="lineChartType">
+                      </canvas>
+                    </div>
+                    <div class="col-xs-2 text-right" *ngIf="moisture_level">
+                      <div class="huge">{{moisture_level}}
+                      </div>
+                      <div>ปริมาณน้ำฝน</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- soil -->
+            <div class="col-lg-12 col-md-12" *ngIf="tab == 'All' || tab == 'อุณหภูมิดิน'">
+              <div class="panel panel-success" *ngIf="lineChartDataSoil.length > 0">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-xs-1 pading">
+                      <i class="wi wi-small-craft-advisory fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 pading" *ngIf="lineChartDataSoil">
+                      <canvas *ngIf="lineChartDataSoil.length > 0" baseChart width="250" height="80" [datasets]="lineChartDataSoil" [labels]="lineChartLabelsSoil"
+                        [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType">
+                      </canvas>
+                    </div>
+                    <div class="col-xs-2 text-right" *ngIf="soil">
+                      <div class="huge">{{soil}}
+                      </div>
+                      <div>ความชื้นในดิน</div>
+                      <div>อุณหภูมิดิน</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- temp -->
+            <div class="col-lg-12 col-md-12" *ngIf="tab == 'All' || tab == 'อุณหภูมิ'">
+              <div class="panel panel-default" *ngIf="lineChartDataTemp.length > 0">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-xs-1 pading">
+                      <i class="wi wi-thermometer fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 pading" *ngIf="lineChartDataTemp">
+                      <canvas *ngIf="lineChartDataTemp.length > 0" baseChart width="250" height="80" [datasets]="lineChartDataTemp" [labels]="lineChartLabelsTemp"
+                        [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType">
+                      </canvas>
+                    </div>
+                    <div class="col-xs-2 text-right" *ngIf="temp">
+                      <div class="huge">{{temp}}
+                        <span>ํ</span>
+                      </div>
+                      <div>องศาเซลเซียส</div>
+                      <div>อุณหภูมิ</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- moisture -->
+            <div class="col-lg-12 col-md-12" *ngIf="tab == 'All' || tab == 'ความชื้น'">
+              <div class="panel panel-info" *ngIf="lineChartDataMoisture.length > 0">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-xs-1 pading">
+                      <i class="wi wi-humidity fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 pading" *ngIf="lineChartDataMoisture">
+                      <canvas *ngIf="lineChartDataMoisture.length > 0" baseChart width="250" height="80" [datasets]="lineChartDataMoisture" [labels]="lineChartLabelsMoisture"
+                        [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType">
+                      </canvas>
+                    </div>
+                    <div class="col-xs-2 text-right" *ngIf="moisture">
+                      <div class="huge">{{moisture}}</div>
+                      <div>ความชื้น</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- wind -->
+            <div class="col-lg-12 col-md-12" *ngIf="tab == 'All' || tab == 'ความเเรงลม'">
+              <div class="panel panel-danger " *ngIf="lineChartDataWind.length > 0">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-xs-1 pading">
+                      <i class="wi wi-wind-beaufort-0 fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 pading" *ngIf="lineChartDataWind">
+                      <canvas *ngIf="lineChartDataWind.length > 0" baseChart width="250" height="80" [datasets]="lineChartDataWind" [labels]="lineChartLabelsWind"
+                        [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType">
+                      </canvas>
+                    </div>
+                    <div class="col-xs-2 text-right" *ngIf="wind">
+                      <div class="huge">{{wind>0?wind:0}}</div>
+                      <div>km/h</div>
+                      <div>ความเเรงลม</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- uv -->
+            <div class="col-lg-12 col-md-12" *ngIf="tab == 'All' || tab == 'เเสงเเดด'">
+              <div class="panel panel-warning" *ngIf="lineChartDataUv.length > 0">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-xs-1 pading">
+                      <i class="wi wi-hot fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 pading" *ngIf="lineChartDataUv">
+                      <canvas *ngIf="lineChartDataUv.length > 0" baseChart width="250" height="80" [datasets]="lineChartDataUv" [labels]="lineChartLabelsUv"
+                        [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType">
+                      </canvas>
+                    </div>
+                    <div class="col-xs-2 text-right" *ngIf="uv">
+                      <div class="text-center box-uv uv1-2" *ngIf="uv >=0 && uv <=2">
+                        Low
+                      </div>
+                      <div class="text-center box-uv uv3-5" *ngIf="uv >=3 && uv <=5">
+                        Moderate
+                      </div>
+                      <div class="text-center box-uv uv6-7" *ngIf="uv >=6 && uv <=7">
+                        High
+                      </div>
+                      <div class="text-center box-uv uv8-10" *ngIf="uv >=8 && uv <=10">
+                        Very High
+                      </div>
+                      <div class="text-center box-uv uv11" *ngIf="uv >= 11">
+                        Extreme
+                      </div>
+                      <div>ระบบเเสงเเดด</div>
+                      <div>เเสงเเดด</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- moisture -->
-          <div class="col-lg-3 col-md-6">
-            <div class="panel panel-info hover-show" (click)="OnShowData(2,'ความชื้น')">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-3 pading">
-                    <i class="wi wi-humidity fa-5x"></i>
-                  </div>
-                  <div class="col-xs-9 text-right" *ngIf="moisture">
-                    <div class="huge">{{moisture}}</div>
-                    <div>ความชื้น</div>
-                  </div>
+          <div class="row" *ngIf="tab == 'All' || tab == 'image'">
+            <ng-container *ngIf="imagesSensor.length > 0">
+              <div class="col-md-2">
+                Select camera.
+                <select name="showImg" #showImgSensor class="form-control" (change)="GetImages(showImgSensor.value)">
+                  <option value="">กรุณาเลือกกล้อง</option>
+                  <option *ngFor="let imagesSensors of imagesSensor" value="{{imagesSensors.Id}}">{{imagesSensors.sensor_name }}</option>
+                </select>
+                Select date for image.
+                <select name="showImg" #showImg multiple class="form-control" style="height:250px;" (click)="OnChangeImage(showImg.value)">
+                  <option *ngFor="let imagess of images" value="{{imagess.image}}">{{imagess.create_dt | date:'dd/MM/yyyy' }}</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <div class="image-show" *ngIf="image">
+                  <img [src]="baseUrlimg+'/'+image">
+                </div>
+                <div class="image-show" *ngIf="!image">
+                  <img src="assets/images/no-thumbnail.png">
                 </div>
               </div>
-            </div>
-          </div>
-          <!-- wind -->
-          <div class="col-lg-3 col-md-6">
-            <div class="panel panel-danger hover-show" (click)="OnShowData(3,'ความเเรงลม')">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-3 pading">
-                    <i class="wi wi-wind-beaufort-0 fa-5x"></i>
-                  </div>
-                  <div class="col-xs-9 text-right" *ngIf="wind">
-                    <div class="huge">{{wind>0?wind:0}}</div>
-                    <div>km/h</div>
-                    <div>ความเเรงลม</div>
-                  </div>
-                </div>
+              <div class="col-md-4">
+                <agm-map [latitude]="lat" [longitude]="lng">
+                  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                </agm-map>
               </div>
-            </div>
+            </ng-container>
           </div>
-          <!-- uv -->
-          <div class="col-lg-3 col-md-6">
-            <div class="panel panel-warning hover-show" (click)="OnShowData(4,'ระบบเเสงเเดด')">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-4 pading">
-                    <i class="wi wi-hot fa-5x"></i>
-                  </div>
-                  <div class="col-xs-8 text-right" *ngIf="uv">
-                    <div class="text-center box-uv uv1-2" *ngIf="uv >=0 && uv <=2">
-                      Low
-                    </div>
-                    <div class="text-center box-uv uv3-5" *ngIf="uv >=3 && uv <=5">
-                      Moderate
-                    </div>
-                    <div class="text-center box-uv uv6-7" *ngIf="uv >=6 && uv <=7">
-                      High
-                    </div>
-                    <div class="text-center box-uv uv8-10" *ngIf="uv >=8 && uv <=10">
-                      Very High
-                    </div>
-                    <div class="text-center box-uv uv11" *ngIf="uv >= 11">
-                      Extreme
-                    </div>
-                    <div>ระบบเเสงเเดด</div>
-                    <div>เเสงเเดด</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-2">
-            Select date for image.
-            <hr>
-            <select name="showImg" #showImg multiple class="form-control"  style="height:290px;" (click)="OnChangeImage(showImg.value)">
-              <option *ngFor="let imagess of images" value="{{imagess.image}}">{{imagess.create_dt |  date:'dd/MM/yyyy' }}</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <div class="image-show" *ngIf="image">
-              <img [src]="baseUrlimg+image">
-            </div>
-            <div class="image-show" *ngIf="!image">
-              <img src="assets/images/no-thumbnail.png">
-            </div>
-          </div>
-          <div class="col-md-4">
-            <agm-map [latitude]="lat" [longitude]="lng">
-              <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-            </agm-map>
-          </div>
-        </div>
+        </ng-container>
       </div>
     </div>
   </div>
-  <app-modal-grap *ngIf="OpenModal" [Open]="OpenModal" [Data]="DataShow" [Labels]="Label" (Close)="OnCloseModel()"></app-modal-grap>

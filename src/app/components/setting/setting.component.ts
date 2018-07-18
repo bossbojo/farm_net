@@ -24,26 +24,16 @@ export class SettingComponent implements OnInit {
   }
   SetForm(){
     this.FormSetting = this.build.group({
-        "temp": ['',[Validators.required]],
-        "moisture": ['',[Validators.required]],
-        "raining": ['',[Validators.required]],
-        "wind": ['',[Validators.required]],
-        "uv": ['',[Validators.required]],
-        "soil": ['',[Validators.required]],
-        "image": ['',[Validators.required]],
+        "sensor": ['',[Validators.required]],
+        "time": ['',[Validators.required]],
     });
   }
   GetDataSetting(){
     this.http.requestGet(`get/setting?serial_number=${this.Users.serial_number}`).subscribe((res:any)=>{
-      if(res.data.length > 0){
+      if(res.data){
         this.FormSetting.setValue({
-            "temp": res.data[0].temp,
-            "moisture":res.data[0].moisture,
-            "raining": res.data[0].raining,
-            "wind": res.data[0].wind,
-            "uv": res.data[0].uv,
-            "soil":res.data[0].soil,
-            "image":res.data[0].image,
+            "sensor": res.data.sensor,
+            "time":res.data.camera,
         });
       }
     });

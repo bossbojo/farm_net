@@ -51,8 +51,7 @@
                   <div class="form-group">
                     <label for="serial_number">
                       <i class="fas fa-ticket-alt"></i> serial number:</label>
-                    <input type="text" class="form-control" id="serial_number" formControlName="serial_number">
-                    <validation [control]="FormSignUp.controls['serial_number']"></validation>
+                    {{FormSignUp.value.serial_number}}
                   </div>
                 </div>
                 <div class="col-md-6">
