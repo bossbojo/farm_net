@@ -74,7 +74,9 @@
             <select class="form-control" id="sel1" formControlName="sensor_type_id">
               <option value="">กรุณาเลือก</option>
               <ng-container *ngFor="let datas of SensorType">
-                <option value="{{datas.Id}}" *ngIf="datas.Id != 4 || datas.Id != 6 || datas.Id != 8">{{datas.sensor_type_name}}</option>
+                <ng-container *ngIf="datas.Id != 4 && datas.Id != 6 && datas.Id != 8">
+                  <option value="{{datas.Id}}" >{{datas.sensor_type_name}}</option>
+                </ng-container>
               </ng-container>
             </select>
           </div>

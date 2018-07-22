@@ -7,7 +7,9 @@
     "start": "ng serve",
     "test": "ng test",
     "build": "ng build --aot=false -prod --deploy-url \"Frontend/\"",
+    "build:tor": "ng build --aot=false -prod",
     "deploy:real": "npm run build&&deploy.bat",
+    "deploy:tor": "npm run build:tor&&deploy-tor.bat",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
