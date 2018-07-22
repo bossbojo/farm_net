@@ -11,6 +11,7 @@ export const UrlConfig = {
     Setting: 'setting',
     CreateSensor:'create-sensor'
 };
-export const baseUrl = production? 'http://farm.paramat.work/api':'http://localhost:64630/api';
-export const baseUrlimg = production?'http://farm.paramat.work/Images/' :'http://localhost:64630/Images';
-export const baseUrlsignalr = production? 'http://farm.paramat.work/':'http://localhost:64630/';
+
+export const baseUrl = production? 'http://webapi.cricket-farm.work/api':'http://localhost:64630/api';
+export const baseUrlimg = production?'http://webapi.cricket-farm.work/Images/' :'http://localhost:64630/Images';
+export const baseUrlsignalr = production? 'http://webapi.cricket-farm.work':'http://localhost:64630/';

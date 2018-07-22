@@ -89,6 +89,8 @@ export class CreateSensorComponent implements OnInit {
       this.SensorType.forEach(element => {
         this.SensorTypeData[element.Id] = element.sensor_type_name;
       });
+      console.log(this.SensorType);
+      
     });
   }
   GetMySensor(){
